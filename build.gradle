@@ -18,11 +18,16 @@ repositories {
     }
 }
 
+configurations{
+    driver
+}
+
 dependencies {
     testCompile group: 'junit', name: 'junit', version: '4.11'
-    compile name: 'PokemonManager-0.3.0'
+    compile name: 'PokemonManager-1.2.0'
     compile 'com.google.code.gson:gson:2.7'
-
+    compile group: 'org.postgresql', name: 'postgresql', version: '9.4.1208.jre7'
+    driver group: 'org.postgresql', name: 'postgresql', version: '9.4.1208.jre7'
 }
 
 task(run, dependsOn: 'classes', type: JavaExec) {
@@ -49,4 +54,15 @@ jacocoTestReport {
                     ])
         })
     }
+}
+
+task sql << {
+    URLClassLoader loader = GroovyObject.class.classLoader
+    configurations.driver.each {File file ->
+        loader.addURL(file.toURL())
+    }
+    def driverName = 'org.postgresql.Driver'
+    groovy.sql.Sql sql = groovy.sql.Sql.newInstance('jdbc:postgresql://localhost:5432/pokemon', 'molliestephenson', 'test', driverName)
+    sql.execute 'create table pokemon (name varchar(50) unique, height varchar(10))'
+    sql.execute 'create table abilities (name varchar(50), ability varchar(50))'
 }
