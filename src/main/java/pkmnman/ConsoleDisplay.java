@@ -26,6 +26,10 @@ public class ConsoleDisplay implements Display {
         write(script.addingPage());
     }
 
+    public void showFreeHeader() {
+        write(script.freePage());
+    }
+
     public void promptForPokemon() {
         write(script.promptUserForCaughtPokemon());
     }
@@ -51,6 +55,10 @@ public class ConsoleDisplay implements Display {
         write(script.confirmSave(name));
     }
 
+    public void saveError(String name) {
+        write(script.saveError(name));
+    }
+
     public void invalidPokemon(String message) {
         write(script.saveError(message));
     }
@@ -61,10 +69,6 @@ public class ConsoleDisplay implements Display {
 
     public void showViewHeader() {
         write(script.viewPage());
-    }
-
-    public void askForCatch() {
-        write(script.askForCatch());
     }
 
     public void showPokemonCount(int size) {
@@ -81,6 +85,26 @@ public class ConsoleDisplay implements Display {
 
     public void checkIfCaught(String name) {
         write(script.checkIfCaught(name));
+    }
+
+    public void promptForNameToFree() {
+        write(script.askForFreeName());
+    }
+
+    public void confirmFreedom(String name) {
+        write(script.confirmFreedom(name));
+    }
+
+    public void confirmPokemonIsFree(String name) {
+        write(script.displayFreedom(name));
+    }
+
+    public void managementMenu() {
+        write(script.managementMenu());
+    }
+
+    public void freeError(String pokemonName) {
+        write(script.freeError(pokemonName));
     }
 
     private void write(String message) {

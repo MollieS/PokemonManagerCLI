@@ -12,6 +12,8 @@ public interface Display {
 
     void showAddHeader();
 
+    void showFreeHeader();
+
     void promptForPokemon();
 
     void askForSave();
@@ -24,13 +26,11 @@ public interface Display {
 
     void confirmSave(String name);
 
-    void invalidPokemon(String message);
+    void saveError(String name);
 
     void noPokemon();
 
     void showViewHeader();
-
-    void askForCatch();
 
     void showPokemonCount(int size);
 
@@ -39,4 +39,14 @@ public interface Display {
     void invalidInput();
 
     void checkIfCaught(String name);
+
+    void promptForNameToFree();
+
+    void confirmFreedom(String name);
+
+    void confirmPokemonIsFree(String name);
+
+    void managementMenu();
+
+    void freeError(String pokemonName);
 }

@@ -2,7 +2,7 @@ package pkmnman;
 
 import org.junit.Test;
 import pkmncore.Pokemon;
-import pkmncore.pokemon.Pokemon.NamedPokemon;
+import pkmncore.pokemon.NamedPokemon;
 
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
@@ -32,6 +32,11 @@ public class ScriptTest {
     }
 
     @Test
+    public void displaysFreePokemonPage() {
+        assertTrue(script.freePage().contains("FREE A POKEMON"));
+    }
+
+    @Test
     public void instructsAUserToEnterAName() {
         assertTrue(script.promptUser().contains("enter the name of the pokemon you wish to find"));
     }
@@ -57,8 +62,7 @@ public class ScriptTest {
     @Test
     public void showsAMenuOfActions() {
         assertTrue(script.showMenu().contains("SEARCH"));
-        assertTrue(script.showMenu().contains("ADD"));
-        assertTrue(script.showMenu().contains("VIEW"));
+        assertTrue(script.showMenu().contains("MANAGE"));
         assertTrue(script.showMenu().contains("QUIT"));
     }
 
@@ -73,18 +77,13 @@ public class ScriptTest {
     }
 
     @Test
-    public void confirmsPokemonIsSaved() {
-        assertTrue(script.confirmSave("pikachu").contains("pikachu was caught!"));
-    }
-
-    @Test
     public void showsHowManyPokemonAreCaught() {
       assertTrue(script.showCount(1).contains("you have caught 1 pokemon"));
     }
 
     @Test
     public void showsErrorMessage() {
-        assertTrue(script.saveError("Error!").contains("Something went wrong"));
+        assertTrue(script.saveError("pikachu").contains("pikachu has already been caught!"));
     }
 
     @Test
@@ -107,4 +106,18 @@ public class ScriptTest {
         assertTrue(script.invalidInput().contains("valid"));
     }
 
+    @Test
+    public void promptsUserForNameOfPokemonToSetFree() {
+        assertTrue(script.askForFreeName().contains("Which pokemon do you want to set free?"));
+    }
+
+    @Test
+    public void asksForConfirmationForSettingAPokemonFree() {
+        assertTrue(script.confirmFreedom("pikachu").contains("Are you sure you want to set pikachu free?"));
+    }
+
+    @Test
+    public void confirmsAPokemonHasBeenSetFree() {
+        assertTrue(script.displayFreedom("pikachu").contains("pikachu has been set free!"));
+    }
 }

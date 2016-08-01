@@ -23,11 +23,19 @@ public class ApplicationRunner {
 
     public void start() {
         display.clearScreen();
+        menuPage(Action.NONE);
+    }
+
+    private void menuPage(Action action) {
+        display.clearScreen();
         display.greet();
+        if (action == Action.INPUTERROR) {
+            display.invalidInput();
+        }
         getUserAction();
     }
 
-    public void searchPage() {
+    private void searchPage() {
         display.clearScreen();
         display.showSearchHeader();
         display.promptUser();
@@ -35,78 +43,166 @@ public class ApplicationRunner {
         searchedPokemonPage(pokemon);
     }
 
+    private void searchedPokemonPage(Pokemon pokemon) {
+        display.showDetails(pokemon);
+        display.checkIfCaught(pokemon.getName());
+        Action action = confirmSave(pokemon);
+        managePage(action, pokemon.getName());
+    }
+
     private Pokemon findPokemon() {
-        String name = input.get();
+        String name = formatInput(input.get());
         Pokemon pokemon = finder.find(name);
         display.clearScreen();
         return pokemon;
     }
 
-    public void addPage() {
-        display.clearScreen();
-        display.showAddHeader();
-        display.promptForPokemon();
-        String name = input.get();
-        Pokemon pokemon = finder.find(name);
-        pokemonPage(pokemon);
-    }
-
-    private void viewPage() {
+    private void managePage(Action action, String pokemonName) {
         display.clearScreen();
         display.showViewHeader();
-        List<Pokemon> caughtPokemon = manager.viewCaughtPokemon();
-        displayCaughtPokemon(caughtPokemon);
+        displayCaughtPokemon();
+        displayActionRequired(action, pokemonName);
+        display.managementMenu();
+        getManageAction();
     }
 
-    private void getUserAction() {
-        display.showMenu();
-        String action = input.get().toUpperCase().trim();
-        switch (action) {
-            case "SEARCH":
-                searchPage();
-                break;
-            case "ADD":
-                addPage();
-                break;
-            case "VIEW":
-                viewPage();
-                break;
-            case "QUIT":
-                display.goodbye();
-                break;
-            default:
-                display.clearScreen();
-                display.invalidInput();
-                getUserAction();
-                break;
+    private void getManageAction() {
+        String answer = loopForValidInput();
+        if ("add".equals(answer)) {
+            addPage();
+        } else if ("free".equals(answer)) {
+            freePage();
+        } else if ("back".equals(answer)) {
+            menuPage(Action.NONE);
+        } else if ("quit".equals(answer)) {
+            display.goodbye();
         }
     }
 
-    private void searchedPokemonPage(Pokemon pokemon) {
-        display.showDetails(pokemon);
-        display.checkIfCaught(pokemon.getName());
-        confirmSave(pokemon);
+    private String loopForValidInput() {
+        String answer = formatInput(input.get());
+        while(!validAnswer(answer)) {
+            display.invalidInput();
+            answer = formatInput(input.get());
+        }
+        return answer;
+    }
+
+    private boolean validAnswer(String answer) {
+        return answer.equals("add") || answer.equals("quit") || answer.equals("free") || answer.equals("back");
+    }
+
+    private void addPage() {
+        display.clearScreen();
+        display.showAddHeader();
+        display.promptForPokemon();
+        String name = formatInput(input.get());
+        Pokemon pokemon = finder.find(name);
+        pokemonPage(pokemon);
     }
 
     private void pokemonPage(Pokemon pokemon) {
         display.clearScreen();
         display.showDetails(pokemon);
-        display.askForSave();
-        confirmSave(pokemon);
+        Action action = Action.NONE;
+        if (!pokemon.equals(Pokemon.NULL)) {
+            display.askForSave();
+            action = confirmSave(pokemon);
+        }
+        managePage(action, pokemon.getName());
     }
 
-    private void savePokemon(Pokemon pokemon) {
-        try {
-            manager.catchPokemon(pokemon);
-            display.confirmSave(pokemon.getName());
-        } catch (PokemonError pokemonError) {
-            display.invalidPokemon(pokemon.getName() + " has already been caught!");
+    private Action confirmSave(Pokemon pokemon) {
+        String confirmation = formatInput(input.get());
+        Action action = Action.NONE;
+        if ("yes".equals(confirmation)) {
+            action = savePokemon(pokemon);
+        } else if (!"no".equals(confirmation)){
+            display.invalidInput();
+            confirmSave(pokemon);
+        }
+        return action;
+    }
+
+    private void freePage() {
+        display.clearScreen();
+        display.showFreeHeader();
+        List<Pokemon> caughtPokemon = manager.viewCaughtPokemon();
+        caughtPokemonDisplay(caughtPokemon);
+        display.promptForNameToFree();
+        String name = formatInput(input.get());
+        Pokemon pokemon = caughtPokemon(name);
+        if (pokemon != Pokemon.NULL) {
+            pokemonFreePage(pokemon);
+        } else {
+            managePage(Action.FREEERROR, name);
         }
     }
 
-    private void displayCaughtPokemon(List<Pokemon> caughtPokemon) {
+    private Pokemon caughtPokemon(String name) {
+        List<Pokemon> caughtPokemon = manager.viewCaughtPokemon();
+        for (Pokemon pokemon : caughtPokemon) {
+            if (name.equals(pokemon.getName())) {
+                return pokemon;
+            }
+        }
+        return Pokemon.NULL;
+    }
+
+    private void pokemonFreePage(Pokemon pokemon) {
+        display.clearScreen();
+        display.showDetails(pokemon);
+        display.confirmFreedom(pokemon.getName());
+        String answer = formatInput(input.get());
+        setPokemonFree(pokemon.getName(), answer);
+    }
+
+    private void setPokemonFree(String name, String answer) {
+        Action action = Action.NONE;
+        if (("yes").equals(answer)) {
+            try {
+                manager.setFree(name);
+                action = Action.FREE;
+            } catch (PokemonError pokemonError) {
+                action = Action.FREEERROR;
+            }
+        }
+        managePage(action, name);
+    }
+
+    private void getUserAction() {
+        display.showMenu();
+        String action = formatInput(input.get());
+        if ("search".equals(action)) {
+            searchPage();
+        } else if ("manage".equals(action)) {
+            managePage(Action.NONE, "");
+        } else if ("quit".equals(action)) {
+            display.goodbye();
+        } else {
+            menuPage(Action.INPUTERROR);
+        }
+    }
+
+    private String formatInput(String input) {
+        return input.toLowerCase().trim();
+    }
+
+    private Action savePokemon(Pokemon pokemon) {
+        Action action;
+        try {
+            manager.catchPokemon(pokemon);
+            action = Action.CATCH;
+        } catch (PokemonError pokemonError) {
+            action = Action.SAVEERROR;
+        }
+        return action;
+    }
+
+    private void displayCaughtPokemon() {
+        List<Pokemon> caughtPokemon = manager.viewCaughtPokemon();
         if (caughtPokemon.isEmpty()) {
-            noCaughtPokemon();
+            display.noPokemon();
         } else {
             caughtPokemonDisplay(caughtPokemon);
         }
@@ -115,47 +211,32 @@ public class ApplicationRunner {
     private void caughtPokemonDisplay(List<Pokemon> caughtPokemon) {
         display.showPokemonCount(caughtPokemon.size());
         showAllPokemon(caughtPokemon);
-        getUserAction();
     }
 
     private void showAllPokemon(List<Pokemon> caughtPokemon) {
-        for (Pokemon pokemon : caughtPokemon) {
-            display.showDetails(pokemon);
-        }
+        caughtPokemon.forEach(display::showDetails);
     }
 
-    private void noCaughtPokemon() {
-        display.noPokemon();
-        display.askForCatch();
-        askToCatch();
-    }
-
-    private void askToCatch() {
-        String answer = input.get().toLowerCase().trim();
-        if ("yes".equals(answer)) {
-            addPage();
-        } else if ("no".equals(answer)){
-            getUserAction();
-        } else {
+    private void displayActionRequired(Action action, String pokemonName) {
+        if (action == Action.CATCH) {
+            display.confirmSave(pokemonName);
+        } else if (action == Action.FREE) {
+            display.confirmPokemonIsFree(pokemonName);
+        } else if (action == Action.INPUTERROR) {
             display.invalidInput();
-            askToCatch();
+        } else if (action == Action.SAVEERROR) {
+            display.saveError(pokemonName);
+        } else if (action == Action.FREEERROR) {
+            display.freeError(pokemonName);
         }
     }
 
-    private void confirmSave(Pokemon pokemon) {
-        String confirmation = input.get().toLowerCase().trim();
-        switch (confirmation) {
-            case "yes":
-                savePokemon(pokemon);
-                getUserAction();
-                break;
-            case "no":
-                getUserAction();
-                break;
-            default:
-                display.invalidInput();
-                confirmSave(pokemon);
-                break;
-        }
+    private enum Action {
+        CATCH,
+        FREE,
+        INPUTERROR,
+        NONE,
+        SAVEERROR,
+        FREEERROR
     }
 }

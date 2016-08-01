@@ -31,6 +31,10 @@ public class DisplayFake implements Display {
         outputStream += script.addingPage();
     }
 
+    public void showFreeHeader() {
+        outputStream += script.freePage();
+    }
+
     public void promptForPokemon() {
         outputStream += script.promptUserForCaughtPokemon();
     }
@@ -54,6 +58,10 @@ public class DisplayFake implements Display {
        outputStream += script.confirmSave(name);
     }
 
+    public void saveError(String name) {
+        outputStream += script.saveError(name);
+    }
+
     public void invalidPokemon(String message) {
         outputStream += script.saveError(message);
     }
@@ -64,10 +72,6 @@ public class DisplayFake implements Display {
 
     public void showViewHeader() {
         outputStream += script.viewPage();
-    }
-
-    public void askForCatch() {
-        outputStream += script.askForCatch();
     }
 
     public void showPokemonCount(int size) {
@@ -84,5 +88,25 @@ public class DisplayFake implements Display {
 
     public void checkIfCaught(String name) {
         outputStream += script.checkIfCaught(name);
+    }
+
+    public void promptForNameToFree() {
+        outputStream += script.askForFreeName();
+    }
+
+    public void confirmFreedom(String name) {
+        outputStream += script.confirmFreedom(name);
+    }
+
+    public void confirmPokemonIsFree(String name) {
+        outputStream += script.displayFreedom(name);
+    }
+
+    public void managementMenu() {
+        outputStream += script.managementMenu();
+    }
+
+    public void freeError(String pokemonName) {
+        outputStream += script.freeError(pokemonName);
     }
 }
