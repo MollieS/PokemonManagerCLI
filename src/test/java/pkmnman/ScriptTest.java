@@ -1,8 +1,8 @@
 package pkmnman;
 
 import org.junit.Test;
-import pkmncore.NamedPokemon;
 import pkmncore.Pokemon;
+import pkmncore.pokemon.Pokemon.NamedPokemon;
 
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;

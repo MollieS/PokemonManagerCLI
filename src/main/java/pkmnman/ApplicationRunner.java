@@ -2,8 +2,8 @@ package pkmnman;
 
 import pkmncore.Pokemon;
 import pkmncore.PokemonError;
-import pkmncore.PokemonFinder;
-import pkmncore.PokemonManager;
+import pkmncore.search.PokemonFinder;
+import pkmncore.storage.PokemonManager;
 
 import java.util.List;
 
@@ -81,7 +81,7 @@ public class ApplicationRunner {
             manager.catchPokemon(pokemon);
             display.confirmSave(pokemon.getName());
         } catch (PokemonError pokemonError) {
-            display.invalidPokemon(pokemonError.getMessage());
+            display.invalidPokemon(pokemon.getName() + " has already been caught!");
         }
     }
 
@@ -93,11 +93,15 @@ public class ApplicationRunner {
             noCaughtPokemon();
         } else {
             display.showPokemonCount(caughtPokemon.size());
-           for (Pokemon pokemon : caughtPokemon) {
-               display.showDetails(pokemon);
-           }
+            showAllPokemon(caughtPokemon);
+            getUserAction();
         }
-        getUserAction();
+    }
+
+    private void showAllPokemon(List<Pokemon> caughtPokemon) {
+        for (Pokemon pokemon : caughtPokemon) {
+            display.showDetails(pokemon);
+        }
     }
 
     private void noCaughtPokemon() {
@@ -106,8 +110,7 @@ public class ApplicationRunner {
         String answer = input.get();
         if ("yes".equals(answer)) {
             addPage();
-        } else {
-            display.showMenu();
         }
+        getUserAction();
     }
 }

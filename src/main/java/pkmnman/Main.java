@@ -1,9 +1,10 @@
 package pkmnman;
 
-import pkmncore.DBManager;
-import pkmncore.PokemonFinder;
-import pkmncore.PokemonManager;
-import pkmncore.PokemonSearch;
+
+import pkmncore.search.PokemonFinder;
+import pkmncore.search.PokemonSearch;
+import pkmncore.storage.DBManager;
+import pkmncore.storage.PokemonManager;
 
 public class Main {
 
