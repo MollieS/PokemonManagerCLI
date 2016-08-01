@@ -16,6 +16,8 @@ navigate into the repository with `cd PokemonManagerCLI`
 
 build the project with `gradle build`
 
+you will need to set up the database for the application, which you can do with `gradle sql`
+
 run the app with `gradle -q run`
 
 ### How to test

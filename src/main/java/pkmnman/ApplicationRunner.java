@@ -131,7 +131,7 @@ public class ApplicationRunner {
     }
 
     private void askToCatch() {
-        String answer = input.get();
+        String answer = input.get().toLowerCase().trim();
         if ("yes".equals(answer)) {
             addPage();
         } else if ("no".equals(answer)){
@@ -143,7 +143,7 @@ public class ApplicationRunner {
     }
 
     private void confirmSave(Pokemon pokemon) {
-        String confirmation = input.get();
+        String confirmation = input.get().toLowerCase().trim();
         switch (confirmation) {
             case "yes":
                 savePokemon(pokemon);

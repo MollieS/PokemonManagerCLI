@@ -90,6 +90,15 @@ public class ApplicationRunnerTest {
     }
 
     @Test
+    public void canAddAPokemonFromViewPage() {
+        input.set("VIEW", "yes", "pikachu", "yes", "VIEW", "QUIT");
+        applicationRunner.start();
+        String output = display.read();
+
+        assertTrue(output.contains("you have caught 1 pokemon"));
+    }
+
+    @Test
     public void displaysMessageIfPokemonHasBeenCaught() {
         input.set("ADD", "pikachu", "yes", "ADD", "pikachu", "yes", "QUIT");
         applicationRunner.start();
@@ -97,5 +106,33 @@ public class ApplicationRunnerTest {
 
         assertTrue(output.contains("pikachu has already been caught!"));
     }
+
+    @Test
+    public void loopsForValidMenuInput() {
+        input.set("asudhasd", "QUIT");
+        applicationRunner.start();
+        String output = display.read();
+
+        assertTrue(output.contains("That answer didn't seem to be valid"));
+    }
+
+    @Test
+    public void loopsForValidSaveConfirmation() {
+        input.set("ADD", "pikachu", "aksdhaksjhda", "no", "QUIT");
+        applicationRunner.start();
+        String output = display.read();
+
+        assertTrue(output.contains("That answer didn't seem to be valid"));
+    }
+
+    @Test
+    public void loopsForValidCatchAnswer() {
+        input.set("VIEW", "ahsdkaj", "no", "QUIT");
+        applicationRunner.start();
+        String output = display.read();
+
+        assertTrue(output.contains("That answer didn't seem to be valid"));
+    }
+
 
 }
