@@ -98,11 +98,4 @@ public class ApplicationRunnerTest {
         assertTrue(output.contains("pikachu has already been caught!"));
     }
 
-    @Test
-    public void canViewCaughtPokemon() {
-        input.set("VIEW", "pikachu", "yes", "VIEW", "QUIT");
-
-        applicationRunner.start();
-    }
-
 }

@@ -73,39 +73,39 @@ public class Script {
     }
 
     public String promptUserForCaughtPokemon() {
-        return "Which pokemon did you catch?";
+        return "Which pokemon did you catch?" + "\n";
     }
 
     public String confirmSave(String name) {
-        return name + " was caught!";
+        return name + " was caught!" + "\n";
     }
 
     public String showCount(int count) {
-        return "you have caught " + count + " pokemon";
+        return "you have caught " + count + " pokemon" + "\n";
     }
 
     public String askForConfirmation() {
-        return "Is this the pokemon you caught?";
+        return "Is this the pokemon you caught?" + "\n";
     }
 
     public String saveError(String message) {
-        return "Something went wrong: " + message;
+        return "Something went wrong: " + message + "\n";
     }
 
     public String noCaughtPokemon() {
-        return "You haven't caught any pokemon!";
+        return "You haven't caught any pokemon!" + "\n";
     }
 
     public String askForCatch() {
-        return "Would you like to add a pokemon you have caught?";
+        return "Would you like to add a pokemon you have caught?" + "\n";
     }
 
     public String goodbye() {
-        return "Goodbye!";
+        return "Goodbye!" + "\n";
     }
 
     public String invalidInput() {
-        return "That answer didn't seem to be valid";
+        return "That answer didn't seem to be valid" + "\n";
     }
 
     public String checkIfCaught(String name) {
