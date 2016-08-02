@@ -27,20 +27,8 @@ public class DisplayFake implements Display {
         outputStream += script.searchPage();
     }
 
-    public void showAddHeader() {
-        outputStream += script.addingPage();
-    }
-
     public void showFreeHeader() {
         outputStream += script.freePage();
-    }
-
-    public void promptForPokemon() {
-        outputStream += script.promptUserForCaughtPokemon();
-    }
-
-    public void askForSave() {
-        outputStream += script.askForConfirmation();
     }
 
     public void promptUser() {
@@ -60,10 +48,6 @@ public class DisplayFake implements Display {
 
     public void saveError(String name) {
         outputStream += script.saveError(name);
-    }
-
-    public void invalidPokemon(String message) {
-        outputStream += script.saveError(message);
     }
 
     public void noPokemon() {

@@ -29,32 +29,43 @@ public class ApplicationRunner {
     private void menuPage(Action action) {
         display.clearScreen();
         display.greet();
-        if (action == Action.INPUTERROR) {
-            display.invalidInput();
+        displayActionRequired(action, "");
+        redirectUser();
+    }
+
+    private void redirectUser() {
+        display.showMenu();
+        String action = formatInput(input.get());
+        redirect(action);
+    }
+
+    private void redirect(String action) {
+        if ("search".equals(action)) {
+            searchPage();
+        } else if ("manage".equals(action)) {
+            managePage(Action.NONE, "");
+        } else if ("quit".equals(action)) {
+            display.goodbye();
+        } else {
+            menuPage(Action.INPUTERROR);
         }
-        getUserAction();
     }
 
     private void searchPage() {
         display.clearScreen();
         display.showSearchHeader();
         display.promptUser();
-        Pokemon pokemon = findPokemon();
-        searchedPokemonPage(pokemon);
+        pokemonPage(findPokemon());
     }
 
-    private void searchedPokemonPage(Pokemon pokemon) {
-        display.showDetails(pokemon);
-        display.checkIfCaught(pokemon.getName());
-        Action action = confirmSave(pokemon);
-        managePage(action, pokemon.getName());
-    }
-
-    private Pokemon findPokemon() {
-        String name = formatInput(input.get());
-        Pokemon pokemon = finder.find(name);
+    private void pokemonPage(Pokemon pokemon) {
         display.clearScreen();
-        return pokemon;
+        display.showDetails(pokemon);
+        if (pokemon == Pokemon.NULL) {
+            redirectUser();
+        } else {
+            catchPokemon(pokemon);
+        }
     }
 
     private void managePage(Action action, String pokemonName) {
@@ -66,10 +77,20 @@ public class ApplicationRunner {
         getManageAction();
     }
 
+    private void catchPokemon(Pokemon pokemon) {
+        display.checkIfCaught(pokemon.getName());
+        Action action = confirmSave(pokemon);
+        managePage(action, pokemon.getName());
+    }
+
+    private Pokemon findPokemon() {
+        return finder.find(formatInput(input.get()));
+    }
+
     private void getManageAction() {
         String answer = loopForValidInput();
         if ("add".equals(answer)) {
-            addPage();
+            searchPage();
         } else if ("free".equals(answer)) {
             freePage();
         } else if ("back".equals(answer)) {
@@ -79,41 +100,11 @@ public class ApplicationRunner {
         }
     }
 
-    private String loopForValidInput() {
-        String answer = formatInput(input.get());
-        while(!validAnswer(answer)) {
-            display.invalidInput();
-            answer = formatInput(input.get());
-        }
-        return answer;
-    }
-
-    private boolean validAnswer(String answer) {
-        return answer.equals("add") || answer.equals("quit") || answer.equals("free") || answer.equals("back");
-    }
-
-    private void addPage() {
-        display.clearScreen();
-        display.showAddHeader();
-        display.promptForPokemon();
-        String name = formatInput(input.get());
-        Pokemon pokemon = finder.find(name);
-        pokemonPage(pokemon);
-    }
-
-    private void pokemonPage(Pokemon pokemon) {
-        display.clearScreen();
-        display.showDetails(pokemon);
-        Action action = Action.NONE;
-        if (!pokemon.equals(Pokemon.NULL)) {
-            display.askForSave();
-            action = confirmSave(pokemon);
-        }
-        managePage(action, pokemon.getName());
-    }
-
     private Action confirmSave(Pokemon pokemon) {
-        String confirmation = formatInput(input.get());
+        return getAction(pokemon, formatInput(input.get()));
+    }
+
+    private Action getAction(Pokemon pokemon, String confirmation) {
         Action action = Action.NONE;
         if ("yes".equals(confirmation)) {
             action = savePokemon(pokemon);
@@ -170,23 +161,6 @@ public class ApplicationRunner {
         managePage(action, name);
     }
 
-    private void getUserAction() {
-        display.showMenu();
-        String action = formatInput(input.get());
-        if ("search".equals(action)) {
-            searchPage();
-        } else if ("manage".equals(action)) {
-            managePage(Action.NONE, "");
-        } else if ("quit".equals(action)) {
-            display.goodbye();
-        } else {
-            menuPage(Action.INPUTERROR);
-        }
-    }
-
-    private String formatInput(String input) {
-        return input.toLowerCase().trim();
-    }
 
     private Action savePokemon(Pokemon pokemon) {
         Action action;
@@ -210,33 +184,52 @@ public class ApplicationRunner {
 
     private void caughtPokemonDisplay(List<Pokemon> caughtPokemon) {
         display.showPokemonCount(caughtPokemon.size());
-        showAllPokemon(caughtPokemon);
-    }
-
-    private void showAllPokemon(List<Pokemon> caughtPokemon) {
         caughtPokemon.forEach(display::showDetails);
     }
 
     private void displayActionRequired(Action action, String pokemonName) {
-        if (action == Action.CATCH) {
-            display.confirmSave(pokemonName);
-        } else if (action == Action.FREE) {
-            display.confirmPokemonIsFree(pokemonName);
-        } else if (action == Action.INPUTERROR) {
-            display.invalidInput();
-        } else if (action == Action.SAVEERROR) {
-            display.saveError(pokemonName);
-        } else if (action == Action.FREEERROR) {
-            display.freeError(pokemonName);
+        switch (action) {
+            case CATCH:
+                display.confirmSave(pokemonName);
+                break;
+            case FREE:
+                display.confirmPokemonIsFree(pokemonName);
+                break;
+            case INPUTERROR:
+                display.invalidInput();
+                break;
+            case SAVEERROR:
+                display.saveError(pokemonName);
+                break;
+            case FREEERROR:
+                display.freeError(pokemonName);
+                break;
         }
+    }
+
+    private String loopForValidInput() {
+        String answer = formatInput(input.get());
+        while(!validAnswer(answer)) {
+            display.invalidInput();
+            answer = formatInput(input.get());
+        }
+        return answer;
+    }
+
+    private String formatInput(String input) {
+        return input.toLowerCase().trim();
+    }
+
+    private boolean validAnswer(String answer) {
+        return answer.equals("add") || answer.equals("quit") || answer.equals("free") || answer.equals("back");
     }
 
     private enum Action {
         CATCH,
         FREE,
         INPUTERROR,
-        NONE,
         SAVEERROR,
-        FREEERROR
+        FREEERROR,
+        NONE
     }
 }

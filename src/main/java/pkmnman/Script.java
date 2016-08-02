@@ -94,11 +94,11 @@ public class Script {
     }
 
     public String saveError(String name) {
-        return name + " has already been caught!";
+        return name + " has already been caught!" + "\n";
     }
 
     public String freeError(String name) {
-        return name + " has not been caught!";
+        return name + " has not been caught!" + "\n";
     }
 
     public String noCaughtPokemon() {
@@ -118,19 +118,19 @@ public class Script {
     }
 
     public String checkIfCaught(String name) {
-        return "Would you like to add " + name + " to your caught pokemon collection?";
+        return "Would you like to add " + name + " to your caught pokemon collection?" + "\n";
     }
 
     public String askForFreeName() {
-        return "Which pokemon do you want to set free?";
+        return "Which pokemon do you want to set free?" + "\n";
     }
 
     public String confirmFreedom(String name) {
-        return "Are you sure you want to set " + name + " free?";
+        return "Are you sure you want to set " + name + " free?" + "\n";
     }
 
     public String displayFreedom(String name) {
-        return name + " has been set free!";
+        return name + " has been set free!" + "\n";
     }
 
     public String managementMenu() {

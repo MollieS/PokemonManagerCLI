@@ -107,7 +107,7 @@ public class ApplicationRunnerTest {
         applicationRunner.start();
         String output = display.read();
 
-        assertFalse(output.contains("pokemon you caught?"));
+        assertFalse(output.contains("caught pokemon collection"));
     }
 
     @Test

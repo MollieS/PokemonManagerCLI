@@ -22,20 +22,8 @@ public class ConsoleDisplay implements Display {
         write(script.searchPage());
     }
 
-    public void showAddHeader() {
-        write(script.addingPage());
-    }
-
     public void showFreeHeader() {
         write(script.freePage());
-    }
-
-    public void promptForPokemon() {
-        write(script.promptUserForCaughtPokemon());
-    }
-
-    public void askForSave() {
-        write(script.askForConfirmation());
     }
 
     public void promptUser() {
@@ -57,10 +45,6 @@ public class ConsoleDisplay implements Display {
 
     public void saveError(String name) {
         write(script.saveError(name));
-    }
-
-    public void invalidPokemon(String message) {
-        write(script.saveError(message));
     }
 
     public void noPokemon() {

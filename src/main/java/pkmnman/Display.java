@@ -10,13 +10,7 @@ public interface Display {
 
     void showSearchHeader();
 
-    void showAddHeader();
-
     void showFreeHeader();
-
-    void promptForPokemon();
-
-    void askForSave();
 
     void promptUser();
 
