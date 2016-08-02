@@ -91,6 +91,10 @@ public class ConsoleDisplay implements Display {
         write(script.freeError(pokemonName));
     }
 
+    public void pokemonNotFound() {
+        write(script.pokemonNotFound());
+    }
+
     private void write(String message) {
         System.out.println(message);
     }

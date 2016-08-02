@@ -120,4 +120,9 @@ public class ScriptTest {
     public void confirmsAPokemonHasBeenSetFree() {
         assertTrue(script.displayFreedom("pikachu").contains("pikachu has been set free!"));
     }
+
+    @Test
+    public void showsErrorIfPokemonNotCaughtIfFreed() {
+        assertTrue(script.freeError("pikachu").contains("pikachu has not been caught!"));
+    }
 }

@@ -141,4 +141,8 @@ public class Script {
                 "QUIT Pokemon Manager" + "\n" +
                 "or go BACK to main menu" + "\n";
     }
+
+    public String pokemonNotFound() {
+        return "This pokemon does not exist!";
+    }
 }

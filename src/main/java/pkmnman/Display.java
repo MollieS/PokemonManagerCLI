@@ -43,4 +43,6 @@ public interface Display {
     void managementMenu();
 
     void freeError(String pokemonName);
+
+    void pokemonNotFound();
 }

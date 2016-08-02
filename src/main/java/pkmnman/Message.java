@@ -1,0 +1,12 @@
+package pkmnman;
+
+public enum Message {
+
+    CATCH,
+    FREE,
+    INPUTERROR,
+    SAVEERROR,
+    FREEERROR,
+    NOTFOUND,
+    NONE
+}

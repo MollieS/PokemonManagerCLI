@@ -93,4 +93,8 @@ public class DisplayFake implements Display {
     public void freeError(String pokemonName) {
         outputStream += script.freeError(pokemonName);
     }
+
+    public void pokemonNotFound() {
+        outputStream += script.pokemonNotFound();
+    }
 }
