@@ -31,7 +31,7 @@ dependencies {
 }
 
 task(run, dependsOn: 'classes', type: JavaExec) {
-    main = "pkmnman.Main"
+    main = "pokemoncli.Main"
     classpath = sourceSets.main.runtimeClasspath
 }
 
@@ -62,7 +62,7 @@ task sql << {
         loader.addURL(file.toURL())
     }
     def driverName = 'org.postgresql.Driver'
-    groovy.sql.Sql sql = groovy.sql.Sql.newInstance('jdbc:postgresql://localhost:5432/pokemon', 'molliestephenson', 'test', driverName)
+    groovy.sql.Sql sql = groovy.sql.Sql.newInstance('jdbc:postgresql://localhost:5432/pokemon', 'test', 'test', driverName)
     sql.execute 'create table pokemon (name varchar(50) unique, height varchar(10))'
     sql.execute 'create table abilities (name varchar(50), ability varchar(50))'
 }
