@@ -30,20 +30,32 @@ public class PokemonDetailPage implements Page {
     }
 
     private Action pokemonFound() {
-        Action action;
         message = Message.NONE;
         display.checkIfCaught(pokemon.getName());
         String answer = input.get().trim().toLowerCase();
+        return getAction(answer);
+    }
+
+    private Action getAction(String answer) {
+        Action action;
         if (answer.equals("yes")) {
             action = Action.CATCH;
         } else if (answer.equals("no")){
-            pokemon = Pokemon.NULL;
-            action = Action.MENU;
+            action = noSave();
         } else {
-            message = Message.INPUTERROR;
-            action = Action.SHOWPOKEMON;
+            action = invalidInput();
         }
         return action;
+    }
+
+    private Action noSave() {
+        pokemon = Pokemon.NULL;
+        return Action.MENU;
+    }
+
+    private Action invalidInput() {
+        message = Message.INPUTERROR;
+        return Action.SHOWPOKEMON;
     }
 
     private Action pokemonNotFound() {

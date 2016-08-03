@@ -21,22 +21,30 @@ public class ManagementPage implements Page {
     }
 
     public Action view(Message toDisplay) {
-        display.clearScreen();
-        display.showViewHeader();
-        List<Pokemon> caughtPokemon = manager.viewCaughtPokemon();
-        showPokemon(caughtPokemon);
-        display.showPokemonCount(caughtPokemon.size());
+        showPageContent();
         showMessage(toDisplay);
         pokemon = Pokemon.NULL;
         display.managementMenu();
         String answer = input.get().toUpperCase().trim();
-        Action action = getAction(answer);
+        Action action = getUserAction(answer);
+        return getAction(action);
+    }
+
+    private Action getAction(Action action) {
         if (action != Action.NONE) return action;
         message = Message.INPUTERROR;
         return Action.MANAGE;
     }
 
-    private Action getAction(String answer) {
+    private void showPageContent() {
+        display.clearScreen();
+        display.showViewHeader();
+        List<Pokemon> caughtPokemon = manager.viewCaughtPokemon();
+        showPokemon(caughtPokemon);
+        display.showPokemonCount(caughtPokemon.size());
+    }
+
+    private Action getUserAction(String answer) {
         for (Action action : Action.values()) {
             if (action.toString().equals(answer)) {
                 return action;

@@ -17,12 +17,16 @@ public class SearchPage implements Page {
     }
 
     public Action view(Message message) {
-        display.clearScreen();
-        display.showSearchHeader();
-        display.promptUser();
+        showPageContent();
         String name = input.get().toLowerCase().trim();
         this.pokemon = finder.find(name);
         return Action.SHOWPOKEMON;
+    }
+
+    private void showPageContent() {
+        display.clearScreen();
+        display.showSearchHeader();
+        display.promptUser();
     }
 
     public Message getMessage() {
