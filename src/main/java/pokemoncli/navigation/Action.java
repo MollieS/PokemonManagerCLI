@@ -1,4 +1,4 @@
-package pkmnman;
+package pokemoncli.navigation;
 
 public enum Action {
 

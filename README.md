@@ -4,6 +4,8 @@
 
 This project allows users to search for pokemon and receive a few details about the pokemon in return.  It retrieves data from the [PokeApi](http://pokeapi.co/).
 
+You can also add pokemon to your caught pokemon collection, and free pokemon from the collection.
+
 ### Requirements
 
 This is a java project built with gradle.  To run and test the application, you need both of these available to you.

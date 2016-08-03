@@ -1,6 +1,8 @@
-package pkmnman;
+package pokemoncli;
 
 import pkmncore.Pokemon;
+import pokemoncli.navigation.Action;
+import pokemoncli.navigation.Message;
 
 public interface Page {
 

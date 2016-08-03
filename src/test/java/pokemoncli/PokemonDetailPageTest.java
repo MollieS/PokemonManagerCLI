@@ -1,9 +1,13 @@
-package pkmnman;
+package pokemoncli;
 
 import org.junit.Before;
 import org.junit.Test;
 import pkmncore.Pokemon;
 import pkmncore.pokemon.NamedPokemon;
+import pokemoncli.consoleUI.Script;
+import pokemoncli.navigation.Action;
+import pokemoncli.navigation.Message;
+import pokemoncli.pages.PokemonDetailPage;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;

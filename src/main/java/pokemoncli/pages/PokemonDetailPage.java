@@ -1,6 +1,9 @@
-package pkmnman;
+package pokemoncli.pages;
 
 import pkmncore.Pokemon;
+import pokemoncli.*;
+import pokemoncli.navigation.Action;
+import pokemoncli.navigation.Message;
 
 public class PokemonDetailPage implements Page {
 

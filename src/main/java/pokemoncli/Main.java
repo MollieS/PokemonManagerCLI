@@ -1,10 +1,14 @@
-package pkmnman;
+package pokemoncli;
 
 
 import pkmncore.search.PokemonFinder;
 import pkmncore.search.PokemonSearch;
 import pkmncore.storage.DBManager;
 import pkmncore.storage.PokemonManager;
+import pokemoncli.consoleUI.ConsoleDisplay;
+import pokemoncli.consoleUI.ConsoleInput;
+import pokemoncli.consoleUI.Script;
+import pokemoncli.navigation.Navigator;
 
 public class Main {
 

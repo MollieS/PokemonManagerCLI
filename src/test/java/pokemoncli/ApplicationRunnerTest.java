@@ -1,4 +1,4 @@
-package pkmnman;
+package pokemoncli;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -8,6 +8,8 @@ import pkmncore.search.PokemonFinder;
 import pkmncore.storage.PokemonManager;
 import pkmncore.testfakes.SearchFake;
 import pkmncore.testfakes.StorageFake;
+import pokemoncli.consoleUI.Script;
+import pokemoncli.navigation.Navigator;
 
 import static org.junit.Assert.assertTrue;
 

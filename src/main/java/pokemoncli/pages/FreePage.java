@@ -1,8 +1,11 @@
-package pkmnman;
+package pokemoncli.pages;
 
 import pkmncore.Pokemon;
 import pkmncore.PokemonError;
 import pkmncore.storage.PokemonManager;
+import pokemoncli.*;
+import pokemoncli.navigation.Action;
+import pokemoncli.navigation.Message;
 
 import java.util.List;
 
