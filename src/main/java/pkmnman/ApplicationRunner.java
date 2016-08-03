@@ -1,23 +1,15 @@
 package pkmnman;
 
 import pkmncore.Pokemon;
-import pkmncore.search.PokemonFinder;
-import pkmncore.storage.PokemonManager;
 
 public class ApplicationRunner {
 
-    private final PokemonFinder finder;
-    private final Input input;
     private final Display display;
-    private final PokemonManager manager;
     private final Navigator navigator;
 
-    public ApplicationRunner(PokemonFinder finder, PokemonManager manager, Input input, Display display, Navigator navigator) {
-        this.finder = finder;
-        this.manager = manager;
-        this.input = input;
-        this.display = display;
+    public ApplicationRunner(Display display, Navigator navigator) {
         this.navigator = navigator;
+        this.display = display;
     }
 
     public void start() {

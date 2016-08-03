@@ -13,12 +13,11 @@ public class CatchPageTest {
 
     private InputFake inputFake;
     private CatchPage catchPage;
-    private DisplayFake displayFake;
 
     @Before
     public void setUp() {
         this.inputFake = new InputFake();
-        this.displayFake = new DisplayFake(new Script());
+        DisplayFake displayFake = new DisplayFake(new Script());
         PokemonManager manager = new PokemonManager(new StorageFake());
         Pokemon pokemon = new NamedPokemon("pikachu", "4", new String[]{"lightning-rod", "static"});
         this.catchPage = new CatchPage(displayFake, inputFake, pokemon, manager);

@@ -35,8 +35,6 @@ public class PokemonDetailPageTest {
         assertEquals(Message.NONE, message);
     }
 
-
-
     @Test
     public void redirectsToCatchPageIfAnswerIsYes() {
         input.set("yes");
@@ -75,4 +73,13 @@ public class PokemonDetailPageTest {
         assertEquals(Message.INPUTERROR, message);
     }
 
+    @Test
+    public void redirectsToMenuIfPokemonIsNotFound() {
+        PokemonDetailPage pokemonDetailPage = new PokemonDetailPage(display, input, Pokemon.NULL);
+        Action action = pokemonDetailPage.view(Message.NONE);
+        Message message = pokemonDetailPage.getMessage();
+
+        assertEquals(Action.MENU, action);
+        assertEquals(Message.NOTFOUND, message);
+    }
 }

@@ -28,7 +28,7 @@ public class ApplicationRunnerTest {
         this.display = new DisplayFake(new Script());
         this.input = new InputFake();
         Navigator navigator = new Navigator(display, input, finder, manager);
-        this.applicationRunner = new ApplicationRunner(finder, manager, input, display, navigator);
+        this.applicationRunner = new ApplicationRunner(display, navigator);
     }
 
     @Test
@@ -64,11 +64,4 @@ public class ApplicationRunnerTest {
 
         assertTrue(output.contains("pikachu has already been caught!"));
     }
-
-    @Test
-    public void canFindAPokemon() {
-        input.set("search", "pikachu");
-    }
-
-
 }

@@ -21,7 +21,7 @@ public class Main {
         DBManager dbManager = new DBManager("jdbc:postgresql://127.0.0.1:5432/pokemon", "molliestephenson", "test", "org.postgresql.Driver");
         PokemonManager pokemonManager = new PokemonManager(dbManager);
         Navigator navigator = new Navigator(display, input, finder, pokemonManager);
-        ApplicationRunner runner = new ApplicationRunner(finder, pokemonManager, input, display, navigator);
+        ApplicationRunner runner = new ApplicationRunner(display, navigator);
         runner.start();
     }
 }

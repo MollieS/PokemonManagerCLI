@@ -1,5 +1,6 @@
 package pkmnman;
 
+import org.junit.Before;
 import org.junit.Test;
 import pkmncore.Pokemon;
 import pkmncore.PokemonError;
@@ -11,16 +12,26 @@ import static org.junit.Assert.assertTrue;
 
 public class FreePageTest {
 
+    private InputFake inputFake;
+    private StorageFake storageFake;
+    private FreePage page;
+    private DisplayFake displayFake;
+
+    @Before
+    public void setUp() {
+        this.inputFake = new InputFake();
+        this.displayFake = new DisplayFake(new Script());
+        this.storageFake = new StorageFake();
+        PokemonManager pokemonManager = new PokemonManager(storageFake);
+        this.page = new FreePage(displayFake, inputFake, pokemonManager);
+
+    }
+
     @Test
     public void getsNameOfPokemonToFree() throws PokemonError {
-        InputFake inputFake = new InputFake();
-        DisplayFake displayFake = new DisplayFake(new Script());
-        StorageFake storageFake = new StorageFake();
         storageFake.save("pikachu", "4", new String[]{"lightning-rod", "static"});
-        PokemonManager pokemonManager = new PokemonManager(storageFake);
-        FreePage page = new FreePage(displayFake, inputFake, pokemonManager);
-
         inputFake.set("pikachu", "yes");
+
         Action action = page.view(Message.NONE);
         String output = displayFake.read();
         Message message = page.getMessage();
@@ -33,13 +44,8 @@ public class FreePageTest {
 
     @Test
     public void cannotFreeIfNoneCaught() {
-        InputFake inputFake = new InputFake();
-        DisplayFake displayFake = new DisplayFake(new Script());
-        StorageFake storageFake = new StorageFake();
-        PokemonManager pokemonManager = new PokemonManager(storageFake);
-        FreePage page = new FreePage(displayFake, inputFake, pokemonManager);
-
         inputFake.set("pikachu", "yes");
+
         Action action = page.view(Message.NONE);
         Message message = page.getMessage();
 
@@ -49,14 +55,9 @@ public class FreePageTest {
 
     @Test
     public void showsDetailsOfPokemon() throws PokemonError {
-        InputFake inputFake = new InputFake();
-        DisplayFake displayFake = new DisplayFake(new Script());
-        StorageFake storageFake = new StorageFake();
         storageFake.save("pikachu", "4", new String[]{"lightning-rod", "static"});
-        PokemonManager pokemonManager = new PokemonManager(storageFake);
-        FreePage page = new FreePage(displayFake, inputFake, pokemonManager);
-
         inputFake.set("pikachu", "no");
+
         page.view(Message.NONE);
         String output = displayFake.read();
 
@@ -65,14 +66,9 @@ public class FreePageTest {
 
     @Test
     public void canChooseNotToFreeAPokemon() throws PokemonError {
-        InputFake inputFake = new InputFake();
-        DisplayFake displayFake = new DisplayFake(new Script());
-        StorageFake storageFake = new StorageFake();
         storageFake.save("pikachu", "4", new String[]{"lightning-rod", "static"});
-        PokemonManager pokemonManager = new PokemonManager(storageFake);
-        FreePage page = new FreePage(displayFake, inputFake, pokemonManager);
-
         inputFake.set("pikachu", "no");
+
         Action action = page.view(Message.NONE);
         Message message = page.getMessage();
 
@@ -82,14 +78,9 @@ public class FreePageTest {
 
     @Test
     public void loopsForValidInput() throws PokemonError {
-        InputFake inputFake = new InputFake();
-        DisplayFake displayFake = new DisplayFake(new Script());
-        StorageFake storageFake = new StorageFake();
         storageFake.save("pikachu", "4", new String[]{"lightning-rod", "static"});
-        PokemonManager pokemonManager = new PokemonManager(storageFake);
-        FreePage page = new FreePage(displayFake, inputFake, pokemonManager);
-
         inputFake.set("pikachu", "invalid");
+
         Action action = page.view(Message.NONE);
         Message message = page.getMessage();
 
@@ -99,15 +90,10 @@ public class FreePageTest {
 
     @Test
     public void returnsThePokemonFreed() throws PokemonError {
-        InputFake inputFake = new InputFake();
-        DisplayFake displayFake = new DisplayFake(new Script());
-        StorageFake storageFake = new StorageFake();
         storageFake.save("pikachu", "4", new String[]{"lightning-rod", "static"});
-        PokemonManager pokemonManager = new PokemonManager(storageFake);
-        FreePage page = new FreePage(displayFake, inputFake, pokemonManager);
 
         inputFake.set("pikachu", "yes");
-        Action action = page.view(Message.NONE);
+        page.view(Message.FREE);
         Pokemon pokemon = page.getPokemon();
 
         assertEquals("pikachu", pokemon.getName());

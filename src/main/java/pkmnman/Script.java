@@ -90,7 +90,8 @@ public class Script {
     }
 
     public String askForConfirmation() {
-        return "Is this the pokemon you caught?" + "\n";
+        return "Is this the pokemon you caught?" + "\n" +
+                "yes or no" + "\n";
     }
 
     public String saveError(String name) {
@@ -118,7 +119,8 @@ public class Script {
     }
 
     public String checkIfCaught(String name) {
-        return "Would you like to add " + name + " to your caught pokemon collection?" + "\n";
+        return "Would you like to add " + name + " to your caught pokemon collection?" + "\n" +
+                "yes or no" + "\n";
     }
 
     public String askForFreeName() {
@@ -126,7 +128,8 @@ public class Script {
     }
 
     public String confirmFreedom(String name) {
-        return "Are you sure you want to set " + name + " free?" + "\n";
+        return "Are you sure you want to set " + name + " free?" + "\n" +
+                "yes or no" + "\n";
     }
 
     public String displayFreedom(String name) {

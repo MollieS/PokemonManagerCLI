@@ -29,8 +29,8 @@ public class SearchPageTest {
 
         searchPage.view(Message.NONE);
         Message message = searchPage.getMessage();
-
         String output = display.read();
+
         assertTrue(output.contains("SEARCH"));
         assertTrue(output.contains("wish to find"));
         assertEquals(Message.NONE, message);
@@ -67,5 +67,4 @@ public class SearchPageTest {
 
         assertEquals(Message.NOTFOUND, message);
     }
-
 }

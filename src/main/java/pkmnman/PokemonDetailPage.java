@@ -31,9 +31,6 @@ public class PokemonDetailPage implements Page {
 
     private Action pokemonFound() {
         Action action;
-        if (message == Message.INPUTERROR) {
-            display.invalidInput();
-        }
         message = Message.NONE;
         display.checkIfCaught(pokemon.getName());
         String answer = input.get().trim().toLowerCase();
