@@ -1,8 +1,12 @@
-package pkmnman;
+package pokemoncli.navigation;
 
 import pkmncore.Pokemon;
 import pkmncore.search.PokemonFinder;
 import pkmncore.storage.PokemonManager;
+import pokemoncli.Display;
+import pokemoncli.Input;
+import pokemoncli.Page;
+import pokemoncli.pages.*;
 
 public class Navigator {
 

@@ -1,10 +1,14 @@
-package pkmnman;
+package pokemoncli;
 
 import org.junit.Test;
 import pkmncore.Pokemon;
 import pkmncore.pokemon.NamedPokemon;
 import pkmncore.storage.PokemonManager;
 import pkmncore.testfakes.StorageFake;
+import pokemoncli.consoleUI.Script;
+import pokemoncli.navigation.Action;
+import pokemoncli.navigation.Message;
+import pokemoncli.pages.ManagementPage;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;

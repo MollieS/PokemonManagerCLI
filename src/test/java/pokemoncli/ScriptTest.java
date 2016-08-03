@@ -1,8 +1,9 @@
-package pkmnman;
+package pokemoncli;
 
 import org.junit.Test;
 import pkmncore.Pokemon;
 import pkmncore.pokemon.NamedPokemon;
+import pokemoncli.consoleUI.Script;
 
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;

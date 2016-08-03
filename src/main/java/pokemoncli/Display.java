@@ -1,4 +1,4 @@
-package pkmnman;
+package pokemoncli;
 
 import pkmncore.Pokemon;
 

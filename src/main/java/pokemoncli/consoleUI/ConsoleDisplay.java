@@ -1,6 +1,7 @@
-package pkmnman;
+package pokemoncli.consoleUI;
 
 import pkmncore.Pokemon;
+import pokemoncli.Display;
 
 public class ConsoleDisplay implements Display {
 

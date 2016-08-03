@@ -1,4 +1,6 @@
-package pkmnman;
+package pokemoncli.consoleUI;
+
+import pokemoncli.Input;
 
 import java.util.Scanner;
 
