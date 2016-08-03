@@ -27,112 +27,41 @@ public class ApplicationRunnerTest {
 
         this.display = new DisplayFake(new Script());
         this.input = new InputFake();
-        this.applicationRunner = new ApplicationRunner(finder, manager, input, display);
+        Navigator navigator = new Navigator(display, input, finder, manager);
+        this.applicationRunner = new ApplicationRunner(display, navigator);
     }
 
     @Test
     public void showsMenu() {
         input.set("QUIT");
-
         applicationRunner.start();
         String output = display.read();
 
         assertTrue(output.contains("WELCOME"));
-        assertTrue(output.contains("ADD"));
         assertTrue(output.contains("SEARCH"));
-        assertTrue(output.contains("VIEW"));
+        assertTrue(output.contains("MANAGE"));
         assertTrue(output.contains("QUIT"));
     }
 
-
     @Test
-    public void searchesForAPokemon() {
-        input.set("SEARCH", "pikachu", "no", "QUIT");
+    public void canAddAPokemonFromMainMenu() {
+        input.set("SEARCH", "pikachu", "yes", "QUIT");
+
         applicationRunner.start();
         String output = display.read();
 
-        assertTrue(output.contains("SEARCH"));
-        assertTrue(output.contains("find"));
         assertTrue(output.contains("PIKACHU"));
-        assertTrue(output.contains("caught pokemon collection?"));
-    }
-
-    @Test
-    public void asksUserToAddPokemonIfTheyHaventCaughtAny() {
-        input.set("VIEW", "no", "quit");
-        applicationRunner.start();
-        String output = display.read();
-
-        assertTrue(output.contains("YOUR POKEMON"));
-        assertTrue(output.contains("You haven't caught any pokemon"));
-        assertTrue(output.contains("add a pokemon"));
-    }
-
-    @Test
-    public void canAddAPokemonFromAddPage() {
-        input.set("ADD", "pikachu", "yes", "VIEW", "QUIT");
-        applicationRunner.start();
-        String output = display.read();
-
-        assertTrue(output.contains("ADD"));
-        assertTrue(output.contains("Which pokemon did you catch?"));
-        assertTrue(output.contains("pikachu was caught!"));
+        assertTrue(output.contains("pikachu was caught"));
         assertTrue(output.contains("you have caught 1 pokemon"));
     }
 
     @Test
-    public void canAddAPokemonFromSearchPage() {
-        input.set("SEARCH", "pikachu", "yes", "VIEW", "QUIT");
-        applicationRunner.start();
-        String output = display.read();
+    public void cannotAddTheSamePokemonTwice() {
+        input.set("SEARCH", "pikachu", "yes", "ADD", "pikachu", "yes", "QUIT");
 
-        assertTrue(output.contains("you have caught 1 pokemon"));
-    }
-
-    @Test
-    public void canAddAPokemonFromViewPage() {
-        input.set("VIEW", "yes", "pikachu", "yes", "VIEW", "QUIT");
-        applicationRunner.start();
-        String output = display.read();
-
-        assertTrue(output.contains("you have caught 1 pokemon"));
-    }
-
-    @Test
-    public void displaysMessageIfPokemonHasBeenCaught() {
-        input.set("ADD", "pikachu", "yes", "ADD", "pikachu", "yes", "QUIT");
         applicationRunner.start();
         String output = display.read();
 
         assertTrue(output.contains("pikachu has already been caught!"));
     }
-
-    @Test
-    public void loopsForValidMenuInput() {
-        input.set("asudhasd", "QUIT");
-        applicationRunner.start();
-        String output = display.read();
-
-        assertTrue(output.contains("That answer didn't seem to be valid"));
-    }
-
-    @Test
-    public void loopsForValidSaveConfirmation() {
-        input.set("ADD", "pikachu", "aksdhaksjhda", "no", "QUIT");
-        applicationRunner.start();
-        String output = display.read();
-
-        assertTrue(output.contains("That answer didn't seem to be valid"));
-    }
-
-    @Test
-    public void loopsForValidCatchAnswer() {
-        input.set("VIEW", "ahsdkaj", "no", "QUIT");
-        applicationRunner.start();
-        String output = display.read();
-
-        assertTrue(output.contains("That answer didn't seem to be valid"));
-    }
-
-
 }

@@ -22,16 +22,8 @@ public class ConsoleDisplay implements Display {
         write(script.searchPage());
     }
 
-    public void showAddHeader() {
-        write(script.addingPage());
-    }
-
-    public void promptForPokemon() {
-        write(script.promptUserForCaughtPokemon());
-    }
-
-    public void askForSave() {
-        write(script.askForConfirmation());
+    public void showFreeHeader() {
+        write(script.freePage());
     }
 
     public void promptUser() {
@@ -51,8 +43,8 @@ public class ConsoleDisplay implements Display {
         write(script.confirmSave(name));
     }
 
-    public void invalidPokemon(String message) {
-        write(script.saveError(message));
+    public void saveError(String name) {
+        write(script.saveError(name));
     }
 
     public void noPokemon() {
@@ -61,10 +53,6 @@ public class ConsoleDisplay implements Display {
 
     public void showViewHeader() {
         write(script.viewPage());
-    }
-
-    public void askForCatch() {
-        write(script.askForCatch());
     }
 
     public void showPokemonCount(int size) {
@@ -81,6 +69,30 @@ public class ConsoleDisplay implements Display {
 
     public void checkIfCaught(String name) {
         write(script.checkIfCaught(name));
+    }
+
+    public void promptForNameToFree() {
+        write(script.askForFreeName());
+    }
+
+    public void confirmFreedom(String name) {
+        write(script.confirmFreedom(name));
+    }
+
+    public void confirmPokemonIsFree(String name) {
+        write(script.displayFreedom(name));
+    }
+
+    public void managementMenu() {
+        write(script.managementMenu());
+    }
+
+    public void freeError(String pokemonName) {
+        write(script.freeError(pokemonName));
+    }
+
+    public void pokemonNotFound() {
+        write(script.pokemonNotFound());
     }
 
     private void write(String message) {

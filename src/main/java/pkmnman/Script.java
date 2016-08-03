@@ -28,6 +28,12 @@ public class Script {
                 "---------------------------" + "\n";
     }
 
+    public String freePage() {
+        return "---------------------------" + "\n" +
+                "FREE A POKEMON" + "\n" +
+                "---------------------------" + "\n";
+    }
+
 
     public String promptUser() {
         return "Please enter the name of the pokemon you wish to find:" + "\n";
@@ -52,8 +58,8 @@ public class Script {
 
     private String showName(Pokemon pokemon) {
         return "------------------------------" + "\n" +
-                    "|  name:   " + pokemon.getName().toUpperCase() + "\n" +
-                    "------------------------------" + "\n";
+                "|  name:   " + pokemon.getName().toUpperCase() + "\n" +
+                "------------------------------" + "\n";
     }
 
     private String getAbilities(Pokemon pokemon, String details) {
@@ -67,8 +73,7 @@ public class Script {
         return "What would you like to do?" + "\n" +
                 "You can:" + "\n" +
                 "SEARCH for a pokemon" + "\n" +
-                "ADD a pokemon you have caught" + "\n" +
-                "VIEW the pokemon you have caught" + "\n" +
+                "MANAGE your pokemon" + "\n" +
                 "QUIT Pokemon Manager" + "\n";
     }
 
@@ -85,11 +90,16 @@ public class Script {
     }
 
     public String askForConfirmation() {
-        return "Is this the pokemon you caught?" + "\n";
+        return "Is this the pokemon you caught?" + "\n" +
+                "yes or no" + "\n";
     }
 
-    public String saveError(String message) {
-        return "Something went wrong: " + message + "\n";
+    public String saveError(String name) {
+        return name + " has already been caught!" + "\n";
+    }
+
+    public String freeError(String name) {
+        return name + " has not been caught!" + "\n";
     }
 
     public String noCaughtPokemon() {
@@ -109,6 +119,33 @@ public class Script {
     }
 
     public String checkIfCaught(String name) {
-        return "Would you like to add " + name + " to your caught pokemon collection?";
+        return "Would you like to add " + name + " to your caught pokemon collection?" + "\n" +
+                "yes or no" + "\n";
+    }
+
+    public String askForFreeName() {
+        return "Which pokemon do you want to set free?" + "\n";
+    }
+
+    public String confirmFreedom(String name) {
+        return "Are you sure you want to set " + name + " free?" + "\n" +
+                "yes or no" + "\n";
+    }
+
+    public String displayFreedom(String name) {
+        return name + " has been set free!" + "\n";
+    }
+
+    public String managementMenu() {
+        return "What would you like to do?" + "\n" +
+                "You can: " + "\n" +
+                "ADD a pokemon" + "\n" +
+                "FREE a pokemon" + "\n" +
+                "QUIT Pokemon Manager" + "\n" +
+                "or go BACK to main menu" + "\n";
+    }
+
+    public String pokemonNotFound() {
+        return "This pokemon does not exist!";
     }
 }

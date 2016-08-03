@@ -27,16 +27,8 @@ public class DisplayFake implements Display {
         outputStream += script.searchPage();
     }
 
-    public void showAddHeader() {
-        outputStream += script.addingPage();
-    }
-
-    public void promptForPokemon() {
-        outputStream += script.promptUserForCaughtPokemon();
-    }
-
-    public void askForSave() {
-        outputStream += script.askForConfirmation();
+    public void showFreeHeader() {
+        outputStream += script.freePage();
     }
 
     public void promptUser() {
@@ -54,8 +46,8 @@ public class DisplayFake implements Display {
        outputStream += script.confirmSave(name);
     }
 
-    public void invalidPokemon(String message) {
-        outputStream += script.saveError(message);
+    public void saveError(String name) {
+        outputStream += script.saveError(name);
     }
 
     public void noPokemon() {
@@ -64,10 +56,6 @@ public class DisplayFake implements Display {
 
     public void showViewHeader() {
         outputStream += script.viewPage();
-    }
-
-    public void askForCatch() {
-        outputStream += script.askForCatch();
     }
 
     public void showPokemonCount(int size) {
@@ -84,5 +72,29 @@ public class DisplayFake implements Display {
 
     public void checkIfCaught(String name) {
         outputStream += script.checkIfCaught(name);
+    }
+
+    public void promptForNameToFree() {
+        outputStream += script.askForFreeName();
+    }
+
+    public void confirmFreedom(String name) {
+        outputStream += script.confirmFreedom(name);
+    }
+
+    public void confirmPokemonIsFree(String name) {
+        outputStream += script.displayFreedom(name);
+    }
+
+    public void managementMenu() {
+        outputStream += script.managementMenu();
+    }
+
+    public void freeError(String pokemonName) {
+        outputStream += script.freeError(pokemonName);
+    }
+
+    public void pokemonNotFound() {
+        outputStream += script.pokemonNotFound();
     }
 }
