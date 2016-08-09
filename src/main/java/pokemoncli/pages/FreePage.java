@@ -9,6 +9,7 @@ import pokemonmanager.Pokemon;
 import pokemonmanager.PokemonError;
 import pokemonmanager.storage.PokemonManager;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class FreePage implements Page {
@@ -28,20 +29,28 @@ public class FreePage implements Page {
     public Action view(Message toBeDisplayed) {
         display.promptForNameToFree();
         String name = input.get().trim().toLowerCase();
-        List<Pokemon> caughtPokemon = null;
-        caughtPokemon = getPokemon(caughtPokemon);
+        List<Pokemon> caughtPokemon = getCaughtPokemon();
         pokemon = findPokemon(name, caughtPokemon);
-        if (pokemon != Pokemon.NULL) {
-            confirmFree();
-            String answer = input.get().trim().toLowerCase();
-            processInput(name, answer);
-        } else {
-            message = Message.FREEERROR;
-        }
+        tryToFreePokemon(name);
         return Action.MANAGE;
     }
 
-    private List<Pokemon> getPokemon(List<Pokemon> caughtPokemon) {
+    private void tryToFreePokemon(String name) {
+        if (pokemon != Pokemon.NULL) {
+            freePokemon(name);
+        } else {
+            message = Message.FREEERROR;
+        }
+    }
+
+    private void freePokemon(String name) {
+        confirmFree();
+        String answer = input.get().trim().toLowerCase();
+        processInput(name, answer);
+    }
+
+    private List<Pokemon> getCaughtPokemon() {
+        List<Pokemon> caughtPokemon = new ArrayList<>();
         try {
             caughtPokemon = pokemonManager.viewCaughtPokemon();
         } catch (PokemonError pokemonError) {
@@ -51,12 +60,16 @@ public class FreePage implements Page {
     }
 
     private void processInput(String name, String answer) {
-        if (answer.equals("yes")) {
-            setPokemonFree(name);
-        } else if (answer.equals("no")) {
-            message = Message.NONE;
-        } else {
-            message = Message.INPUTERROR;
+        switch (answer) {
+            case "yes":
+                setPokemonFree(name);
+                break;
+            case "no":
+                message = Message.NONE;
+                break;
+            default:
+                message = Message.INPUTERROR;
+                break;
         }
     }
 

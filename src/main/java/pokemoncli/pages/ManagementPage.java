@@ -9,6 +9,7 @@ import pokemonmanager.Pokemon;
 import pokemonmanager.PokemonError;
 import pokemonmanager.storage.PokemonManager;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class ManagementPage implements Page {
@@ -18,12 +19,14 @@ public class ManagementPage implements Page {
     private final PokemonManager manager;
     private Pokemon pokemon;
     private Message message;
+    private Action action;
 
-    public ManagementPage(Display display, Input input, PokemonManager manager, Pokemon pokemon) {
+    public ManagementPage(Display display, Input input, PokemonManager manager, Pokemon pokemon, Action action) {
         this.display = display;
         this.input = input;
         this.manager = manager;
         this.pokemon = pokemon;
+        this.action = action;
     }
 
     public Action view(Message toDisplay) {
@@ -44,14 +47,14 @@ public class ManagementPage implements Page {
 
     private void showPageContent() {
         display.clearScreen();
-        display.showViewHeader();
-        List<Pokemon> caughtPokemon = null;
-        caughtPokemon = getPokemon(caughtPokemon);
+        display.showHeader(action);
+        List<Pokemon> caughtPokemon = getAllPokemon();
         showPokemon(caughtPokemon);
         display.showPokemonCount(caughtPokemon.size());
     }
 
-    private List<Pokemon> getPokemon(List<Pokemon> caughtPokemon) {
+    private List<Pokemon> getAllPokemon() {
+        List<Pokemon> caughtPokemon = new ArrayList<>();
         try {
             caughtPokemon = manager.viewCaughtPokemon();
         } catch (PokemonError pokemonError) {
@@ -70,16 +73,22 @@ public class ManagementPage implements Page {
     }
 
     private void showMessage(Message toDisplay) {
-        if (toDisplay == Message.CATCH) {
-            display.confirmSave(pokemon.getName());
-        } else if (toDisplay == Message.FREE) {
-            display.confirmPokemonIsFree(pokemon.getName());
-        } else if (toDisplay == Message.SAVEERROR) {
-            display.saveError(pokemon.getName());
-        } else if (toDisplay == Message.FREEERROR) {
-            display.freeError(pokemon.getName());
-        } else if (toDisplay == Message.INPUTERROR) {
-            display.invalidInput();
+        switch (toDisplay) {
+            case CATCH:
+                display.confirmSave(pokemon.getName());
+                break;
+            case FREE:
+                display.confirmPokemonIsFree(pokemon.getName());
+                break;
+            case SAVEERROR:
+                display.saveError(pokemon.getName());
+                break;
+            case FREEERROR:
+                display.freeError(pokemon.getName());
+                break;
+            case INPUTERROR:
+                display.invalidInput();
+                break;
         }
     }
 
@@ -87,9 +96,7 @@ public class ManagementPage implements Page {
         if (caughtPokemon.isEmpty()) {
             display.noPokemon();
         } else {
-            for (Pokemon pokemon : caughtPokemon) {
-                display.showDetails(pokemon);
-            }
+            caughtPokemon.forEach(display::showDetails);
         }
     }
 

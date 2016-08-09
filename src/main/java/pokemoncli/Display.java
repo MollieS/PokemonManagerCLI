@@ -1,5 +1,6 @@
 package pokemoncli;
 
+import pokemoncli.navigation.Action;
 import pokemonmanager.Pokemon;
 
 public interface Display {
@@ -9,8 +10,6 @@ public interface Display {
     void showMenu();
 
     void showSearchHeader();
-
-    void showFreeHeader();
 
     void promptUser();
 
@@ -23,6 +22,8 @@ public interface Display {
     void saveError(String name);
 
     void noPokemon();
+
+    void showHeader(Action action);
 
     void showViewHeader();
 

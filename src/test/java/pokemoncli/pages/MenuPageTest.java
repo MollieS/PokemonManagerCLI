@@ -1,11 +1,12 @@
-package pokemoncli;
+package pokemoncli.pages;
 
 import org.junit.Before;
 import org.junit.Test;
+import pokemoncli.ui.DisplayFake;
+import pokemoncli.ui.InputFake;
 import pokemoncli.consoleUI.Script;
 import pokemoncli.navigation.Action;
 import pokemoncli.navigation.Message;
-import pokemoncli.pages.MenuPage;
 import pokemonmanager.Pokemon;
 
 import static org.junit.Assert.assertEquals;
@@ -27,6 +28,7 @@ public class MenuPageTest {
     @Test
     public void showsMenu() {
         input.set("QUIT");
+
         menuPage.view(Message.NONE);
         String output = display.read();
 
@@ -39,6 +41,7 @@ public class MenuPageTest {
     @Test
     public void returnsEnumValueOfQuit() {
         input.set("QUIT");
+
         Action action = menuPage.view(Message.NONE);
 
         assertEquals(Action.QUIT, action);
@@ -47,6 +50,7 @@ public class MenuPageTest {
     @Test
     public void returnsAInvalidInputErrorIfInvalidInput() {
         input.set("not valid", "quit");
+
         menuPage.view(Message.NONE);
         Message message = menuPage.getMessage();
 
@@ -56,6 +60,7 @@ public class MenuPageTest {
     @Test
     public void displaysMessageIfInvalidInput() {
         input.set("QUIT");
+
         menuPage.view(Message.INPUTERROR);
         String output = display.read();
 
@@ -65,6 +70,7 @@ public class MenuPageTest {
     @Test
     public void displaysMessageIfPokemonNotFound() {
         input.set("QUIT");
+
         menuPage.view(Message.NOTFOUND);
         String output = display.read();
 
@@ -74,9 +80,11 @@ public class MenuPageTest {
     @Test
     public void returnsANullPokemon() {
         input.set("QUIT");
+
         menuPage.view(Message.NONE);
         Pokemon pokemon = menuPage.getPokemon();
 
         assertEquals(Pokemon.NULL, pokemon);
     }
+
 }

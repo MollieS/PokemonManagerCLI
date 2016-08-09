@@ -1,7 +1,8 @@
-package pokemoncli;
+package pokemoncli.ui;
 
 import org.junit.Test;
 import pokemoncli.consoleUI.Script;
+import pokemoncli.navigation.Action;
 import pokemonmanager.Pokemon;
 import pokemonmanager.pokemon.NamedPokemon;
 
@@ -16,12 +17,12 @@ public class ScriptTest {
 
     @Test
     public void greetsUser() {
-        assertTrue(script.greet().contains("WELCOME"));
+        assertTrue(script.menuHeader().contains("WELCOME"));
     }
 
     @Test
     public void displaysSearchPage() {
-        assertTrue(script.searchPage().contains("SEARCH"));
+        assertTrue(script.header(Action.SEARCH).contains("SEARCH"));
     }
 
     @Test

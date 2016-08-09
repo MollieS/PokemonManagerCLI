@@ -27,7 +27,7 @@ public class Navigator {
         if (action.equals(Action.SEARCH) || action.equals(Action.ADD)) {
             return new SearchPage(display, input, pokemonFinder);
         } else if (action == Action.MANAGE) {
-            return new ManagementPage(display, input, pokemonManager, pokemon);
+            return new ManagementPage(display, input, pokemonManager, pokemon, action);
         } else if (action == Action.SHOWPOKEMON) {
             return new PokemonDetailPage(display, input, pokemon);
         } else if (action == Action.CATCH) {

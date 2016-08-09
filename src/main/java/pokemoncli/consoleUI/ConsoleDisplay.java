@@ -1,6 +1,7 @@
 package pokemoncli.consoleUI;
 
 import pokemoncli.Display;
+import pokemoncli.navigation.Action;
 import pokemonmanager.Pokemon;
 
 public class ConsoleDisplay implements Display {
@@ -12,7 +13,7 @@ public class ConsoleDisplay implements Display {
     }
 
     public void greet() {
-        write(script.greet());
+        write(script.menuHeader());
     }
 
     public void showMenu() {
@@ -20,7 +21,7 @@ public class ConsoleDisplay implements Display {
     }
 
     public void showSearchHeader() {
-        write(script.searchPage());
+        write(script.header(Action.SEARCH));
     }
 
     public void showFreeHeader() {
@@ -50,6 +51,10 @@ public class ConsoleDisplay implements Display {
 
     public void noPokemon() {
         write(script.noCaughtPokemon());
+    }
+
+    public void showHeader(Action action) {
+        write(script.header(action));
     }
 
     public void showViewHeader() {

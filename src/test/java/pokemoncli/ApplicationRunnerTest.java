@@ -4,6 +4,8 @@ import org.junit.Before;
 import org.junit.Test;
 import pokemoncli.consoleUI.Script;
 import pokemoncli.navigation.Navigator;
+import pokemoncli.ui.DisplayFake;
+import pokemoncli.ui.InputFake;
 import pokemonmanager.SearchEngine;
 import pokemonmanager.StorageUnit;
 import pokemonmanager.search.PokemonFinder;

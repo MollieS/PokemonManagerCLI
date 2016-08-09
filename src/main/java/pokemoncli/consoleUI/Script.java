@@ -1,18 +1,19 @@
 package pokemoncli.consoleUI;
 
+import pokemoncli.navigation.Action;
 import pokemonmanager.Pokemon;
 
 public class Script {
 
-    public String greet() {
+    public String menuHeader() {
         return "---------------------------" + "\n" +
                 "WELCOME TO POKEMON MANAGER" + "\n" +
                 "---------------------------" + "\n";
     }
 
-    public String searchPage() {
+    public String header(Action action) {
         return "---------------------------" + "\n" +
-                "POKEMON SEARCH" + "\n" +
+                "POKEMON " + action + "\n" +
                 "---------------------------" + "\n";
     }
 
@@ -142,7 +143,7 @@ public class Script {
                 "ADD a pokemon" + "\n" +
                 "FREE a pokemon" + "\n" +
                 "QUIT Pokemon Manager" + "\n" +
-                "or go BACK to main menu" + "\n";
+                "or go to main MENU" + "\n";
     }
 
     public String pokemonNotFound() {

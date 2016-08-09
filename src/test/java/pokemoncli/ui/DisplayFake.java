@@ -1,6 +1,8 @@
-package pokemoncli;
+package pokemoncli.ui;
 
+import pokemoncli.Display;
 import pokemoncli.consoleUI.Script;
+import pokemoncli.navigation.Action;
 import pokemonmanager.Pokemon;
 
 public class DisplayFake implements Display {
@@ -17,7 +19,7 @@ public class DisplayFake implements Display {
     }
 
     public void greet() {
-        outputStream += script.greet();
+        outputStream += script.menuHeader();
     }
 
     public void showMenu() {
@@ -25,7 +27,7 @@ public class DisplayFake implements Display {
     }
 
     public void showSearchHeader() {
-        outputStream += script.searchPage();
+        outputStream += script.header(Action.SEARCH);
     }
 
     public void showFreeHeader() {
@@ -53,6 +55,10 @@ public class DisplayFake implements Display {
 
     public void noPokemon() {
         outputStream += script.noCaughtPokemon();
+    }
+
+    public void showHeader(Action action) {
+        outputStream += script.header(action);
     }
 
     public void showViewHeader() {

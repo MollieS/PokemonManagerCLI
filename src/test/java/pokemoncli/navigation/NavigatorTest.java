@@ -1,10 +1,11 @@
-package pokemoncli;
+package pokemoncli.navigation;
 
 import org.junit.Test;
+import pokemoncli.Page;
 import pokemoncli.consoleUI.Script;
-import pokemoncli.navigation.Action;
-import pokemoncli.navigation.Navigator;
 import pokemoncli.pages.*;
+import pokemoncli.ui.DisplayFake;
+import pokemoncli.ui.InputFake;
 import pokemonmanager.Pokemon;
 import pokemonmanager.search.PokemonFinder;
 import pokemonmanager.storage.PokemonManager;
@@ -56,4 +57,5 @@ public class NavigatorTest {
         Page page = navigator.redirect(Action.FREE, Pokemon.NULL);
         assertEquals(page.getClass(), FreePage.class);
     }
+
 }
