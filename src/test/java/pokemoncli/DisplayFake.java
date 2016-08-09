@@ -1,7 +1,7 @@
 package pokemoncli;
 
-import pkmncore.Pokemon;
 import pokemoncli.consoleUI.Script;
+import pokemonmanager.Pokemon;
 
 public class DisplayFake implements Display {
 

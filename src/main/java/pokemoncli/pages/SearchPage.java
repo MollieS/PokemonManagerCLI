@@ -1,10 +1,12 @@
 package pokemoncli.pages;
 
-import pkmncore.Pokemon;
-import pkmncore.search.PokemonFinder;
-import pokemoncli.*;
+import pokemoncli.Display;
+import pokemoncli.Input;
+import pokemoncli.Page;
 import pokemoncli.navigation.Action;
 import pokemoncli.navigation.Message;
+import pokemonmanager.Pokemon;
+import pokemonmanager.search.PokemonFinder;
 
 public class SearchPage implements Page {
 

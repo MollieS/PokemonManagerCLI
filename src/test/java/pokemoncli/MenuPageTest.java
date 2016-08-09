@@ -2,11 +2,11 @@ package pokemoncli;
 
 import org.junit.Before;
 import org.junit.Test;
-import pkmncore.Pokemon;
 import pokemoncli.consoleUI.Script;
 import pokemoncli.navigation.Action;
 import pokemoncli.navigation.Message;
 import pokemoncli.pages.MenuPage;
+import pokemonmanager.Pokemon;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;

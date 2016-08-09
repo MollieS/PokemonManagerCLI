@@ -1,9 +1,9 @@
 package pokemoncli;
 
-import pkmncore.Pokemon;
 import pokemoncli.navigation.Action;
 import pokemoncli.navigation.Message;
 import pokemoncli.navigation.Navigator;
+import pokemonmanager.Pokemon;
 
 public class ApplicationRunner {
 

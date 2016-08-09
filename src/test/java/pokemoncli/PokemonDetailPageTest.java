@@ -2,12 +2,14 @@ package pokemoncli;
 
 import org.junit.Before;
 import org.junit.Test;
-import pkmncore.Pokemon;
-import pkmncore.pokemon.NamedPokemon;
 import pokemoncli.consoleUI.Script;
 import pokemoncli.navigation.Action;
 import pokemoncli.navigation.Message;
 import pokemoncli.pages.PokemonDetailPage;
+import pokemonmanager.Pokemon;
+import pokemonmanager.pokemon.NamedPokemon;
+
+import java.util.Arrays;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
@@ -21,7 +23,7 @@ public class PokemonDetailPageTest {
     @Before
     public void setUp() {
         this.display = new DisplayFake(new Script());
-        Pokemon pokemon = new NamedPokemon("pikachu", "4", new String[]{"lightning-rod", "static"});
+        Pokemon pokemon = new NamedPokemon("pikachu", "4", Arrays.asList("lightning-rod", "static"));
         this.input = new InputFake();
         this.pokemonDetailPage = new PokemonDetailPage(display, input, pokemon);
     }

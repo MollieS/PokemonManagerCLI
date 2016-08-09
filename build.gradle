@@ -24,7 +24,7 @@ configurations{
 
 dependencies {
     testCompile group: 'junit', name: 'junit', version: '4.11'
-    compile name: 'PokemonManager-1.4.0'
+    compile name: 'PokemonManager-2.0.0'
     compile 'com.google.code.gson:gson:2.7'
     compile group: 'org.postgresql', name: 'postgresql', version: '9.4.1208.jre7'
     driver group: 'org.postgresql', name: 'postgresql', version: '9.4.1208.jre7'

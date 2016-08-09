@@ -1,11 +1,13 @@
 package pokemoncli.pages;
 
-import pkmncore.Pokemon;
-import pkmncore.PokemonError;
-import pkmncore.storage.PokemonManager;
-import pokemoncli.*;
+import pokemoncli.Display;
+import pokemoncli.Input;
+import pokemoncli.Page;
 import pokemoncli.navigation.Action;
 import pokemoncli.navigation.Message;
+import pokemonmanager.Pokemon;
+import pokemonmanager.PokemonError;
+import pokemonmanager.storage.PokemonManager;
 
 public class CatchPage implements Page {
 

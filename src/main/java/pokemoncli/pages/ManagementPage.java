@@ -1,10 +1,13 @@
 package pokemoncli.pages;
 
-import pkmncore.Pokemon;
-import pkmncore.storage.PokemonManager;
-import pokemoncli.*;
+import pokemoncli.Display;
+import pokemoncli.Input;
+import pokemoncli.Page;
 import pokemoncli.navigation.Action;
 import pokemoncli.navigation.Message;
+import pokemonmanager.Pokemon;
+import pokemonmanager.PokemonError;
+import pokemonmanager.storage.PokemonManager;
 
 import java.util.List;
 
@@ -42,9 +45,19 @@ public class ManagementPage implements Page {
     private void showPageContent() {
         display.clearScreen();
         display.showViewHeader();
-        List<Pokemon> caughtPokemon = manager.viewCaughtPokemon();
+        List<Pokemon> caughtPokemon = null;
+        caughtPokemon = getPokemon(caughtPokemon);
         showPokemon(caughtPokemon);
         display.showPokemonCount(caughtPokemon.size());
+    }
+
+    private List<Pokemon> getPokemon(List<Pokemon> caughtPokemon) {
+        try {
+            caughtPokemon = manager.viewCaughtPokemon();
+        } catch (PokemonError pokemonError) {
+            pokemonError.printStackTrace();
+        }
+        return caughtPokemon;
     }
 
     private Action getUserAction(String answer) {

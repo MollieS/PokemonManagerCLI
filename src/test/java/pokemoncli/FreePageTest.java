@@ -2,14 +2,17 @@ package pokemoncli;
 
 import org.junit.Before;
 import org.junit.Test;
-import pkmncore.Pokemon;
-import pkmncore.PokemonError;
-import pkmncore.storage.PokemonManager;
-import pkmncore.testfakes.StorageFake;
 import pokemoncli.consoleUI.Script;
 import pokemoncli.navigation.Action;
 import pokemoncli.navigation.Message;
 import pokemoncli.pages.FreePage;
+import pokemonmanager.Pokemon;
+import pokemonmanager.PokemonError;
+import pokemonmanager.pokemon.NamedPokemon;
+import pokemonmanager.storage.PokemonManager;
+import pokemonmanager.testfakes.StorageFake;
+
+import java.util.Arrays;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
@@ -20,6 +23,7 @@ public class FreePageTest {
     private StorageFake storageFake;
     private FreePage page;
     private DisplayFake displayFake;
+    private Pokemon pokemon = new NamedPokemon("pikachu", "4", Arrays.asList("lightning-rod", "static"));
 
     @Before
     public void setUp() {
@@ -33,7 +37,7 @@ public class FreePageTest {
 
     @Test
     public void getsNameOfPokemonToFree() throws PokemonError {
-        storageFake.save("pikachu", "4", new String[]{"lightning-rod", "static"});
+        storageFake.save(pokemon);
         inputFake.set("pikachu", "yes");
 
         Action action = page.view(Message.NONE);
@@ -59,7 +63,7 @@ public class FreePageTest {
 
     @Test
     public void showsDetailsOfPokemon() throws PokemonError {
-        storageFake.save("pikachu", "4", new String[]{"lightning-rod", "static"});
+        storageFake.save(pokemon);
         inputFake.set("pikachu", "no");
 
         page.view(Message.NONE);
@@ -70,7 +74,7 @@ public class FreePageTest {
 
     @Test
     public void canChooseNotToFreeAPokemon() throws PokemonError {
-        storageFake.save("pikachu", "4", new String[]{"lightning-rod", "static"});
+        storageFake.save(pokemon);
         inputFake.set("pikachu", "no");
 
         Action action = page.view(Message.NONE);
@@ -82,7 +86,7 @@ public class FreePageTest {
 
     @Test
     public void loopsForValidInput() throws PokemonError {
-        storageFake.save("pikachu", "4", new String[]{"lightning-rod", "static"});
+        storageFake.save(pokemon);
         inputFake.set("pikachu", "invalid");
 
         Action action = page.view(Message.NONE);
@@ -94,7 +98,7 @@ public class FreePageTest {
 
     @Test
     public void returnsThePokemonFreed() throws PokemonError {
-        storageFake.save("pikachu", "4", new String[]{"lightning-rod", "static"});
+        storageFake.save(pokemon);
 
         inputFake.set("pikachu", "yes");
         page.view(Message.FREE);

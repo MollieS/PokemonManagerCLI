@@ -1,6 +1,6 @@
 package pokemoncli;
 
-import pkmncore.Pokemon;
+import pokemonmanager.Pokemon;
 
 public interface Display {
 

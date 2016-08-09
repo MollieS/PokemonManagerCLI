@@ -2,14 +2,14 @@ package pokemoncli;
 
 import org.junit.Before;
 import org.junit.Test;
-import pkmncore.SearchEngine;
-import pkmncore.StorageUnit;
-import pkmncore.search.PokemonFinder;
-import pkmncore.storage.PokemonManager;
-import pkmncore.testfakes.SearchFake;
-import pkmncore.testfakes.StorageFake;
 import pokemoncli.consoleUI.Script;
 import pokemoncli.navigation.Navigator;
+import pokemonmanager.SearchEngine;
+import pokemonmanager.StorageUnit;
+import pokemonmanager.search.PokemonFinder;
+import pokemonmanager.storage.PokemonManager;
+import pokemonmanager.testfakes.SearchFake;
+import pokemonmanager.testfakes.StorageFake;
 
 import static org.junit.Assert.assertTrue;
 

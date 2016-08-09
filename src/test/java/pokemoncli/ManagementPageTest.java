@@ -1,14 +1,16 @@
 package pokemoncli;
 
 import org.junit.Test;
-import pkmncore.Pokemon;
-import pkmncore.pokemon.NamedPokemon;
-import pkmncore.storage.PokemonManager;
-import pkmncore.testfakes.StorageFake;
 import pokemoncli.consoleUI.Script;
 import pokemoncli.navigation.Action;
 import pokemoncli.navigation.Message;
 import pokemoncli.pages.ManagementPage;
+import pokemonmanager.Pokemon;
+import pokemonmanager.pokemon.NamedPokemon;
+import pokemonmanager.storage.PokemonManager;
+import pokemonmanager.testfakes.StorageFake;
+
+import java.util.Arrays;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
@@ -34,7 +36,7 @@ public class ManagementPageTest {
     public void showsMessageIfPokemonIsCaught() {
         DisplayFake displayFake = new DisplayFake(new Script());
         InputFake input = new InputFake();
-        Pokemon pokemon = new NamedPokemon("pikachu", "4", new String[]{"lightning-rod", "static"});
+        Pokemon pokemon = new NamedPokemon("pikachu", "4", Arrays.asList("lightning-rod", "static"));
         ManagementPage managementPage = new ManagementPage(displayFake, input, new PokemonManager(new StorageFake()), pokemon);
 
         input.set("QUIT");
@@ -48,7 +50,7 @@ public class ManagementPageTest {
     public void showsMessageIfPokemonIsFreed() {
         DisplayFake displayFake = new DisplayFake(new Script());
         InputFake input = new InputFake();
-        Pokemon pokemon = new NamedPokemon("pikachu", "4", new String[]{"lightning-rod", "static"});
+        Pokemon pokemon = new NamedPokemon("pikachu", "4", Arrays.asList("lightning-rod", "static"));
         ManagementPage managementPage = new ManagementPage(displayFake, input, new PokemonManager(new StorageFake()), pokemon);
 
         input.set("QUIT");
@@ -62,7 +64,7 @@ public class ManagementPageTest {
     public void loopsForValidInput() {
         DisplayFake displayFake = new DisplayFake(new Script());
         InputFake input = new InputFake();
-        Pokemon pokemon = new NamedPokemon("pikachu", "4", new String[]{"lightning-rod", "static"});
+        Pokemon pokemon = new NamedPokemon("pikachu", "4", Arrays.asList("lightning-rod", "static"));
         ManagementPage managementPage = new ManagementPage(displayFake, input, new PokemonManager(new StorageFake()), pokemon);
 
         input.set("not valid input");
@@ -78,7 +80,7 @@ public class ManagementPageTest {
     public void displaysFreeError() {
         DisplayFake displayFake = new DisplayFake(new Script());
         InputFake input = new InputFake();
-        Pokemon pokemon = new NamedPokemon("pikachu", "4", new String[]{"lightning-rod", "static"});
+        Pokemon pokemon = new NamedPokemon("pikachu", "4", Arrays.asList("lightning-rod", "static"));
         ManagementPage managementPage = new ManagementPage(displayFake, input, new PokemonManager(new StorageFake()), pokemon);
 
         input.set("QUIT");
@@ -92,14 +94,13 @@ public class ManagementPageTest {
     public void displaysInputError() {
         DisplayFake displayFake = new DisplayFake(new Script());
         InputFake input = new InputFake();
-        Pokemon pokemon = new NamedPokemon("pikachu", "4", new String[]{"lightning-rod", "static"});
+        Pokemon pokemon = new NamedPokemon("pikachu", "4", Arrays.asList("lightning-rod", "static"));
         ManagementPage managementPage = new ManagementPage(displayFake, input, new PokemonManager(new StorageFake()), pokemon);
 
         input.set("QUIT");
         managementPage.view(Message.INPUTERROR);
         String output = displayFake.read();
 
-        System.out.println(output);
         assertTrue(output.contains("didn't seem to be valid"));
     }
 }

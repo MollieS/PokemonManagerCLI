@@ -2,12 +2,12 @@ package pokemoncli;
 
 import org.junit.Before;
 import org.junit.Test;
-import pkmncore.Pokemon;
-import pkmncore.search.PokemonFinder;
-import pkmncore.testfakes.SearchFake;
 import pokemoncli.consoleUI.Script;
 import pokemoncli.navigation.Message;
 import pokemoncli.pages.SearchPage;
+import pokemonmanager.Pokemon;
+import pokemonmanager.search.PokemonFinder;
+import pokemonmanager.testfakes.SearchFake;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;

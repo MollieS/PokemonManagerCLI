@@ -1,9 +1,11 @@
 package pokemoncli;
 
 import org.junit.Test;
-import pkmncore.Pokemon;
-import pkmncore.pokemon.NamedPokemon;
 import pokemoncli.consoleUI.Script;
+import pokemonmanager.Pokemon;
+import pokemonmanager.pokemon.NamedPokemon;
+
+import java.util.Arrays;
 
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
@@ -44,7 +46,7 @@ public class ScriptTest {
 
     @Test
     public void displaysPokemonInformation() {
-        Pokemon pokemon = new NamedPokemon("charmander", "6", new String[]{"solar-power", "blaze"});
+        Pokemon pokemon = new NamedPokemon("charmander", "6", Arrays.asList("solar-power", "blaze"));
         String output = script.showDetails(pokemon);
         assertTrue(output.contains("CHARMANDER"));
         assertTrue(output.contains("6"));

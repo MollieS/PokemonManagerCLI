@@ -1,11 +1,13 @@
 package pokemoncli.pages;
 
-import pkmncore.Pokemon;
-import pkmncore.PokemonError;
-import pkmncore.storage.PokemonManager;
-import pokemoncli.*;
+import pokemoncli.Display;
+import pokemoncli.Input;
+import pokemoncli.Page;
 import pokemoncli.navigation.Action;
 import pokemoncli.navigation.Message;
+import pokemonmanager.Pokemon;
+import pokemonmanager.PokemonError;
+import pokemonmanager.storage.PokemonManager;
 
 import java.util.List;
 
@@ -26,7 +28,8 @@ public class FreePage implements Page {
     public Action view(Message toBeDisplayed) {
         display.promptForNameToFree();
         String name = input.get().trim().toLowerCase();
-        List<Pokemon> caughtPokemon = pokemonManager.viewCaughtPokemon();
+        List<Pokemon> caughtPokemon = null;
+        caughtPokemon = getPokemon(caughtPokemon);
         pokemon = findPokemon(name, caughtPokemon);
         if (pokemon != Pokemon.NULL) {
             confirmFree();
@@ -36,6 +39,15 @@ public class FreePage implements Page {
             message = Message.FREEERROR;
         }
         return Action.MANAGE;
+    }
+
+    private List<Pokemon> getPokemon(List<Pokemon> caughtPokemon) {
+        try {
+            caughtPokemon = pokemonManager.viewCaughtPokemon();
+        } catch (PokemonError pokemonError) {
+            pokemonError.printStackTrace();
+        }
+        return caughtPokemon;
     }
 
     private void processInput(String name, String answer) {

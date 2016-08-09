@@ -1,6 +1,6 @@
 package pokemoncli.consoleUI;
 
-import pkmncore.Pokemon;
+import pokemonmanager.Pokemon;
 
 public class Script {
 
