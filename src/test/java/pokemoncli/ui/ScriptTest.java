@@ -26,23 +26,8 @@ public class ScriptTest {
     }
 
     @Test
-    public void displaysAddPage() {
-        assertTrue(script.addingPage().contains("ADD"));
-    }
-
-    @Test
-    public void displaysCaughtPokemon() {
-        assertTrue(script.viewPage().contains("YOUR POKEMON"));
-    }
-
-    @Test
-    public void displaysFreePokemonPage() {
-        assertTrue(script.freePage().contains("FREE A POKEMON"));
-    }
-
-    @Test
     public void instructsAUserToEnterAName() {
-        assertTrue(script.promptUser().contains("enter the name of the pokemon you wish to find"));
+        assertTrue(script.promptUser(Action.SEARCH).contains("enter the name of the pokemon you wish to SEARCH"));
     }
 
     @Test
@@ -112,7 +97,7 @@ public class ScriptTest {
 
     @Test
     public void promptsUserForNameOfPokemonToSetFree() {
-        assertTrue(script.askForFreeName().contains("Which pokemon do you want to set free?"));
+        assertTrue(script.promptUser(Action.FREE).contains("wish to FREE"));
     }
 
     @Test

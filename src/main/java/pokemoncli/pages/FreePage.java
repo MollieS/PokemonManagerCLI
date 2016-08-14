@@ -27,7 +27,7 @@ public class FreePage implements Page {
     }
 
     public Action view(Message toBeDisplayed) {
-        display.promptForNameToFree();
+        display.promptUser(Action.FREE);
         String name = input.get().trim().toLowerCase();
         List<Pokemon> caughtPokemon = getCaughtPokemon();
         pokemon = findPokemon(name, caughtPokemon);

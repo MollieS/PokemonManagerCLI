@@ -44,7 +44,7 @@ public class FreePageTest {
         page.view(Message.NONE);
         String output = displayFake.read();
 
-        assertTrue(output.contains("Which pokemon do you want to set free"));
+        assertTrue(output.contains("wish to FREE"));
         assertTrue(output.contains("Are you sure you want to set pikachu free?"));
     }
 

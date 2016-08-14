@@ -9,23 +9,17 @@ public interface Display {
 
     void showMenu();
 
-    void showSearchHeader();
-
-    void promptUser();
+    void promptUser(Action action);
 
     void showDetails(Pokemon pokemon);
 
     void clearScreen();
-
-    void confirmSave(String name);
 
     void saveError(String name);
 
     void noPokemon();
 
     void showHeader(Action action);
-
-    void showViewHeader();
 
     void showPokemonCount(int size);
 
@@ -35,15 +29,15 @@ public interface Display {
 
     void checkIfCaught(String name);
 
-    void promptForNameToFree();
-
     void confirmFreedom(String name);
+
+    void confirmSave(String name);
 
     void confirmPokemonIsFree(String name);
 
-    void managementMenu();
-
     void freeError(String pokemonName);
+
+    void managementMenu();
 
     void pokemonNotFound();
 }

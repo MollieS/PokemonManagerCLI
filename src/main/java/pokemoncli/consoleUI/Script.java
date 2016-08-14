@@ -6,38 +6,21 @@ import pokemonmanager.Pokemon;
 public class Script {
 
     public String menuHeader() {
-        return "---------------------------" + "\n" +
-                "WELCOME TO POKEMON MANAGER" + "\n" +
-                "---------------------------" + "\n";
+        return format("WELCOME TO POKEMON MANAGER");
     }
 
     public String header(Action action) {
+        return format("POKEMON " + action);
+    }
+
+    private String format(String phrase) {
         return "---------------------------" + "\n" +
-                "POKEMON " + action + "\n" +
+                phrase + "\n" +
                 "---------------------------" + "\n";
     }
 
-    public String addingPage() {
-        return "---------------------------" + "\n" +
-                "ADD A POKEMON" + "\n" +
-                "---------------------------" + "\n";
-    }
-
-    public String viewPage() {
-        return "---------------------------" + "\n" +
-                "YOUR POKEMON" + "\n" +
-                "---------------------------" + "\n";
-    }
-
-    public String freePage() {
-        return "---------------------------" + "\n" +
-                "FREE A POKEMON" + "\n" +
-                "---------------------------" + "\n";
-    }
-
-
-    public String promptUser() {
-        return "Please enter the name of the pokemon you wish to find:" + "\n";
+    public String promptUser(Action action) {
+        return "Please enter the name of the pokemon you wish to " + action + ":" + "\n";
     }
 
     public String showDetails(Pokemon pokemon) {
@@ -58,9 +41,7 @@ public class Script {
     }
 
     private String showName(Pokemon pokemon) {
-        return "------------------------------" + "\n" +
-                "|  name:   " + pokemon.getName().toUpperCase() + "\n" +
-                "------------------------------" + "\n";
+        return format("|  name:   " + pokemon.getName().toUpperCase());
     }
 
     private String getAbilities(Pokemon pokemon, String details) {
@@ -73,9 +54,9 @@ public class Script {
     public String showMenu() {
         return "What would you like to do?" + "\n" +
                 "You can:" + "\n" +
-                "SEARCH for a pokemon" + "\n" +
-                "MANAGE your pokemon" + "\n" +
-                "QUIT Pokemon Manager" + "\n";
+                Action.SEARCH + " for a pokemon" + "\n" +
+                Action.MANAGE + " your pokemon" + "\n" +
+                Action.QUIT + " Pokemon Manager" + "\n";
     }
 
     public String promptUserForCaughtPokemon() {
@@ -84,6 +65,10 @@ public class Script {
 
     public String confirmSave(String name) {
         return name + " was caught!" + "\n";
+    }
+
+    public String displayFreedom(String name) {
+        return name + " has been set free!" + "\n";
     }
 
     public String showCount(int count) {
@@ -124,26 +109,18 @@ public class Script {
                 "yes or no" + "\n";
     }
 
-    public String askForFreeName() {
-        return "Which pokemon do you want to set free?" + "\n";
-    }
-
     public String confirmFreedom(String name) {
         return "Are you sure you want to set " + name + " free?" + "\n" +
                 "yes or no" + "\n";
     }
 
-    public String displayFreedom(String name) {
-        return name + " has been set free!" + "\n";
-    }
-
     public String managementMenu() {
         return "What would you like to do?" + "\n" +
                 "You can: " + "\n" +
-                "ADD a pokemon" + "\n" +
-                "FREE a pokemon" + "\n" +
-                "QUIT Pokemon Manager" + "\n" +
-                "or go to main MENU" + "\n";
+                Action.ADD + " a pokemon" + "\n" +
+                Action.FREE + " a pokemon" + "\n" +
+                Action.QUIT + " Pokemon Manager" + "\n" +
+                "or go to main " + Action.MENU + "\n";
     }
 
     public String pokemonNotFound() {

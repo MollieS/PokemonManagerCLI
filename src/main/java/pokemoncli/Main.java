@@ -9,10 +9,14 @@ import pokemonmanager.search.PokemonSearch;
 import pokemonmanager.storage.DBManager;
 import pokemonmanager.storage.PokemonManager;
 
+import java.io.OutputStreamWriter;
+import java.io.Writer;
+
 public class Main {
 
     public static void main(String[] args) {
-        Display display = new ConsoleDisplay(new Script());
+        Writer writer = new OutputStreamWriter(System.out);
+        Display display = new ConsoleDisplay(new Script(), writer);
         Input input = new ConsoleInput();
         PokemonSearch pokemonSearch = new PokemonSearch("http://pokeapi.co/api/v2/pokemon/");
         PokemonFinder finder = new PokemonFinder(pokemonSearch);

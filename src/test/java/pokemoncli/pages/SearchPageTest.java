@@ -35,7 +35,7 @@ public class SearchPageTest {
         String output = display.read();
 
         assertTrue(output.contains("SEARCH"));
-        assertTrue(output.contains("wish to find"));
+        assertTrue(output.contains("wish to SEARCH"));
     }
 
     @Test

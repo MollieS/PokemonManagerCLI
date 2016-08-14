@@ -30,8 +30,8 @@ public class SearchPage implements Page {
 
     private void showPageContent() {
         display.clearScreen();
-        display.showSearchHeader();
-        display.promptUser();
+        display.showHeader(Action.SEARCH);
+        display.promptUser(Action.SEARCH);
     }
 
     public Message getMessage() {

@@ -4,12 +4,16 @@ import pokemoncli.Display;
 import pokemoncli.navigation.Action;
 import pokemonmanager.Pokemon;
 
+import java.io.Writer;
+
 public class ConsoleDisplay implements Display {
 
     private final Script script;
+    private final Writer writer;
 
-    public ConsoleDisplay(Script script) {
+    public ConsoleDisplay(Script script, Writer writer) {
         this.script = script;
+        this.writer = writer;
     }
 
     public void greet() {
@@ -20,16 +24,8 @@ public class ConsoleDisplay implements Display {
         write(script.showMenu());
     }
 
-    public void showSearchHeader() {
-        write(script.header(Action.SEARCH));
-    }
-
-    public void showFreeHeader() {
-        write(script.freePage());
-    }
-
-    public void promptUser() {
-        write(script.promptUser());
+    public void promptUser(Action action) {
+        write(script.promptUser(action));
     }
 
     public void showDetails(Pokemon pokemon) {
@@ -38,7 +34,6 @@ public class ConsoleDisplay implements Display {
 
     public void clearScreen() {
         write("\033[H\033[2J");
-        System.out.flush();
     }
 
     public void confirmSave(String name) {
@@ -57,10 +52,6 @@ public class ConsoleDisplay implements Display {
         write(script.header(action));
     }
 
-    public void showViewHeader() {
-        write(script.viewPage());
-    }
-
     public void showPokemonCount(int size) {
         write(script.showCount(size));
     }
@@ -75,10 +66,6 @@ public class ConsoleDisplay implements Display {
 
     public void checkIfCaught(String name) {
         write(script.checkIfCaught(name));
-    }
-
-    public void promptForNameToFree() {
-        write(script.askForFreeName());
     }
 
     public void confirmFreedom(String name) {
@@ -102,7 +89,12 @@ public class ConsoleDisplay implements Display {
     }
 
     private void write(String message) {
-        System.out.println(message);
+        try {
+            writer.write(message);
+            writer.flush();
+        } catch (Exception e) {
+            throw new WriterException(e);
+        }
     }
 
 }

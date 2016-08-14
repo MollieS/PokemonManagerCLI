@@ -26,16 +26,8 @@ public class DisplayFake implements Display {
         outputStream += script.showMenu();
     }
 
-    public void showSearchHeader() {
-        outputStream += script.header(Action.SEARCH);
-    }
-
-    public void showFreeHeader() {
-        outputStream += script.freePage();
-    }
-
-    public void promptUser() {
-        outputStream += script.promptUser();
+    public void promptUser(Action action) {
+        outputStream += script.promptUser(action);
     }
 
     public void showDetails(Pokemon pokemon) {
@@ -61,10 +53,6 @@ public class DisplayFake implements Display {
         outputStream += script.header(action);
     }
 
-    public void showViewHeader() {
-        outputStream += script.viewPage();
-    }
-
     public void showPokemonCount(int size) {
         outputStream += script.showCount(size);
     }
@@ -79,10 +67,6 @@ public class DisplayFake implements Display {
 
     public void checkIfCaught(String name) {
         outputStream += script.checkIfCaught(name);
-    }
-
-    public void promptForNameToFree() {
-        outputStream += script.askForFreeName();
     }
 
     public void confirmFreedom(String name) {
