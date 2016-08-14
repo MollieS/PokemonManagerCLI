@@ -17,7 +17,7 @@ public class ScriptTest {
 
     @Test
     public void greetsUser() {
-        assertTrue(script.menuHeader().contains("WELCOME"));
+        assertTrue(script.menuHeader().contains("WELCOME TO POKEMON MANAGER"));
     }
 
     @Test
@@ -57,7 +57,7 @@ public class ScriptTest {
 
     @Test
     public void asksWhichPokemonToAdd() {
-        assertTrue(script.promptUserForCaughtPokemon().contains("Which pokemon did you catch?"));
+        assertTrue(script.promptUser(Action.CATCH).contains("wish to CATCH"));
     }
 
     @Test
@@ -67,7 +67,7 @@ public class ScriptTest {
 
     @Test
     public void showsHowManyPokemonAreCaught() {
-      assertTrue(script.showCount(1).contains("you have caught 1 pokemon"));
+        assertTrue(script.showCount(1).contains("you have caught 1 pokemon"));
     }
 
     @Test
@@ -102,7 +102,7 @@ public class ScriptTest {
 
     @Test
     public void asksForConfirmationForSettingAPokemonFree() {
-        assertTrue(script.confirmFreedom("pikachu").contains("Are you sure you want to set pikachu free?"));
+        assertTrue(script.checkUserAction("pikachu", Action.FREE).contains("pikachu the pokemon you want to FREE?"));
     }
 
     @Test

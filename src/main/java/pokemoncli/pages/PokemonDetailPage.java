@@ -29,14 +29,13 @@ public class PokemonDetailPage implements Page {
     private Action getAction() {
         if (pokemon == Pokemon.NULL) {
             return pokemonNotFound();
-        } else {
-            return pokemonFound();
         }
+        return pokemonFound();
     }
 
     private Action pokemonFound() {
         message = Message.NONE;
-        display.checkIfCaught(pokemon.getName());
+        display.checkDecision(pokemon.getName(), Action.CATCH);
         String answer = input.get().trim().toLowerCase();
         return getAction(answer);
     }

@@ -85,9 +85,8 @@ public class FreePage implements Page {
     private void confirmFree() {
         display.clearScreen();
         display.showDetails(pokemon);
-        display.confirmFreedom(pokemon.getName());
+        display.checkDecision(pokemon.getName(), Action.FREE);
     }
-
 
     private Pokemon findPokemon(String name, List<Pokemon> caughtPokemon) {
         for (Pokemon pokemon : caughtPokemon) {

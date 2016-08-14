@@ -34,9 +34,20 @@ public class ManagementPage implements Page {
         showMessage(toDisplay);
         pokemon = Pokemon.NULL;
         display.managementMenu();
+        return getAction(getUserAction());
+    }
+
+    public Message getMessage() {
+        return message;
+    }
+
+    public Pokemon getPokemon() {
+        return pokemon;
+    }
+
+    private Action getUserAction() {
         String answer = input.get().toUpperCase().trim();
-        Action action = getUserAction(answer);
-        return getAction(action);
+        return getUserAction(answer);
     }
 
     private Action getAction(Action action) {
@@ -98,13 +109,5 @@ public class ManagementPage implements Page {
         } else {
             caughtPokemon.forEach(display::showDetails);
         }
-    }
-
-    public Message getMessage() {
-        return message;
-    }
-
-    public Pokemon getPokemon() {
-        return pokemon;
     }
 }

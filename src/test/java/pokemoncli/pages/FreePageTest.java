@@ -33,24 +33,22 @@ public class FreePageTest {
         this.storageFake = new StorageFake();
         PokemonManager pokemonManager = new PokemonManager(storageFake);
         this.page = new FreePage(displayFake, inputFake, pokemonManager);
-
     }
 
     @Test
     public void getsNameOfPokemonToFree() throws PokemonError {
-        storageFake.save(pokemon);
+        savePokemon();
         inputFake.set("pikachu", "yes");
 
         page.view(Message.NONE);
-        String output = displayFake.read();
 
-        assertTrue(output.contains("wish to FREE"));
-        assertTrue(output.contains("Are you sure you want to set pikachu free?"));
+        assertTrue(getOutput().contains("wish to FREE"));
+        assertTrue(getOutput().contains("pikachu the pokemon you want to FREE?"));
     }
 
     @Test
     public void redirectsToManagePageIfPokemonIsFreed() throws PokemonError {
-        storageFake.save(pokemon);
+        savePokemon();
         inputFake.set("pikachu", "yes");
 
         Action action = page.view(Message.NONE);
@@ -60,7 +58,7 @@ public class FreePageTest {
 
     @Test
     public void returnsFreedMessageIfPokemonIsFreed() throws PokemonError {
-        storageFake.save(pokemon);
+        savePokemon();
         inputFake.set("pikachu", "yes");
 
         page.view(Message.NONE);
@@ -90,18 +88,17 @@ public class FreePageTest {
 
     @Test
     public void showsDetailsOfPokemon() throws PokemonError {
-        storageFake.save(pokemon);
+        savePokemon();
         inputFake.set("pikachu", "no");
 
         page.view(Message.NONE);
-        String output = displayFake.read();
 
-        assertTrue(output.contains("PIKACHU"));
+        assertTrue(getOutput().contains("PIKACHU"));
     }
 
     @Test
     public void canChooseNotToFreeAPokemon() throws PokemonError {
-        storageFake.save(pokemon);
+        savePokemon();
         inputFake.set("pikachu", "no");
 
         page.view(Message.NONE);
@@ -112,7 +109,7 @@ public class FreePageTest {
 
     @Test
     public void returnsErrorIfInvalidInput() throws PokemonError {
-        storageFake.save(pokemon);
+        savePokemon();
         inputFake.set("pikachu", "invalid");
 
         page.view(Message.NONE);
@@ -123,7 +120,7 @@ public class FreePageTest {
 
     @Test
     public void returnsThePokemonFreed() throws PokemonError {
-        storageFake.save(pokemon);
+        savePokemon();
         inputFake.set("pikachu", "yes");
 
         page.view(Message.FREE);
@@ -132,4 +129,11 @@ public class FreePageTest {
         assertEquals("pikachu", pokemon.getName());
     }
 
+    private void savePokemon() throws PokemonError {
+        storageFake.save(pokemon);
+    }
+
+    private String getOutput() {
+        return displayFake.read();
+    }
 }

@@ -86,5 +86,4 @@ public class MenuPageTest {
 
         assertEquals(Pokemon.NULL, pokemon);
     }
-
 }

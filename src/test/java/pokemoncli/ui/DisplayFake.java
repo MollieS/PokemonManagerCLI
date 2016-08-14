@@ -65,14 +65,6 @@ public class DisplayFake implements Display {
         outputStream += script.invalidInput();
     }
 
-    public void checkIfCaught(String name) {
-        outputStream += script.checkIfCaught(name);
-    }
-
-    public void confirmFreedom(String name) {
-        outputStream += script.confirmFreedom(name);
-    }
-
     public void confirmPokemonIsFree(String name) {
         outputStream += script.displayFreedom(name);
     }
@@ -87,5 +79,9 @@ public class DisplayFake implements Display {
 
     public void pokemonNotFound() {
         outputStream += script.pokemonNotFound();
+    }
+
+    public void checkDecision(String name, Action action) {
+        outputStream += script.checkUserAction(name, action);
     }
 }

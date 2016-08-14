@@ -77,5 +77,4 @@ public class SearchPageTest {
 
         assertEquals(Message.NOTFOUND, message);
     }
-
 }

@@ -20,7 +20,6 @@ public class Navigator {
         this.input = input;
         this.pokemonFinder = pokemonFinder;
         this.pokemonManager = pokemonManager;
-
     }
 
     public Page redirect(Action action, Pokemon pokemon) {
@@ -31,7 +30,7 @@ public class Navigator {
         } else if (action == Action.SHOWPOKEMON) {
             return new PokemonDetailPage(display, input, pokemon);
         } else if (action == Action.CATCH) {
-            return new CatchPage(display, input, pokemon, pokemonManager);
+            return new CatchPage(pokemon, pokemonManager);
         } else if (action == Action.FREE) {
             return new FreePage(display, input, pokemonManager);
         } else {

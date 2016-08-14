@@ -29,7 +29,6 @@ public class ManagementPageTest {
         this.input = new InputFake();
         Pokemon pokemon = new NamedPokemon("pikachu", "4", Arrays.asList("lightning-rod", "static"));
         this.managementPage = new ManagementPage(displayFake, input, new PokemonManager(new StorageFake()), pokemon, Action.MANAGE);
-
     }
 
     @Test
@@ -111,5 +110,4 @@ public class ManagementPageTest {
 
         assertEquals(Action.MENU, action);
     }
-
 }

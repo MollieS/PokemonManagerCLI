@@ -64,12 +64,8 @@ public class ConsoleDisplay implements Display {
         write(script.invalidInput());
     }
 
-    public void checkIfCaught(String name) {
-        write(script.checkIfCaught(name));
-    }
-
-    public void confirmFreedom(String name) {
-        write(script.confirmFreedom(name));
+    public void checkDecision(String name, Action action) {
+        write(script.checkUserAction(name, action));
     }
 
     public void confirmPokemonIsFree(String name) {
@@ -96,5 +92,4 @@ public class ConsoleDisplay implements Display {
             throw new WriterException(e);
         }
     }
-
 }

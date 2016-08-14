@@ -115,5 +115,4 @@ public class PokemonDetailPageTest {
 
         assertEquals(Message.NOTFOUND, message);
     }
-
 }

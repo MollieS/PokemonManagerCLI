@@ -13,12 +13,6 @@ public class Script {
         return format("POKEMON " + action);
     }
 
-    private String format(String phrase) {
-        return "---------------------------" + "\n" +
-                phrase + "\n" +
-                "---------------------------" + "\n";
-    }
-
     public String promptUser(Action action) {
         return "Please enter the name of the pokemon you wish to " + action + ":" + "\n";
     }
@@ -32,25 +26,6 @@ public class Script {
         return details;
     }
 
-    private String getDetails(Pokemon pokemon, String details) {
-        details += "|  height: " + pokemon.getHeight() + "\n" +
-                "|  abilities: " + "\n";
-        details = getAbilities(pokemon, details);
-        details += "------------------------------" + "\n";
-        return details;
-    }
-
-    private String showName(Pokemon pokemon) {
-        return format("|  name:   " + pokemon.getName().toUpperCase());
-    }
-
-    private String getAbilities(Pokemon pokemon, String details) {
-        for (String ability : pokemon.getAbilities()) {
-            details += "      " + ability + "\n";
-        }
-        return details;
-    }
-
     public String showMenu() {
         return "What would you like to do?" + "\n" +
                 "You can:" + "\n" +
@@ -59,9 +34,6 @@ public class Script {
                 Action.QUIT + " Pokemon Manager" + "\n";
     }
 
-    public String promptUserForCaughtPokemon() {
-        return "Which pokemon did you catch?" + "\n";
-    }
 
     public String confirmSave(String name) {
         return name + " was caught!" + "\n";
@@ -104,13 +76,8 @@ public class Script {
         return "That answer didn't seem to be valid" + "\n";
     }
 
-    public String checkIfCaught(String name) {
-        return "Would you like to add " + name + " to your caught pokemon collection?" + "\n" +
-                "yes or no" + "\n";
-    }
-
-    public String confirmFreedom(String name) {
-        return "Are you sure you want to set " + name + " free?" + "\n" +
+    public String checkUserAction(String name, Action action) {
+        return "Is " + name + " the pokemon you want to " + action + "?\n" +
                 "yes or no" + "\n";
     }
 
@@ -125,5 +92,30 @@ public class Script {
 
     public String pokemonNotFound() {
         return "This pokemon does not exist!";
+    }
+
+    private String format(String phrase) {
+        return "---------------------------" + "\n" +
+                phrase + "\n" +
+                "---------------------------" + "\n";
+    }
+
+    private String getDetails(Pokemon pokemon, String details) {
+        details += "|  height: " + pokemon.getHeight() + "\n" +
+                "|  abilities: " + "\n";
+        details = getAbilities(pokemon, details);
+        details += "------------------------------" + "\n";
+        return details;
+    }
+
+    private String showName(Pokemon pokemon) {
+        return format("|  name:   " + pokemon.getName().toUpperCase());
+    }
+
+    private String getAbilities(Pokemon pokemon, String details) {
+        for (String ability : pokemon.getAbilities()) {
+            details += "      " + ability + "\n";
+        }
+        return details;
     }
 }

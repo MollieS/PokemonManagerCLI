@@ -27,10 +27,6 @@ public interface Display {
 
     void invalidInput();
 
-    void checkIfCaught(String name);
-
-    void confirmFreedom(String name);
-
     void confirmSave(String name);
 
     void confirmPokemonIsFree(String name);
@@ -40,4 +36,6 @@ public interface Display {
     void managementMenu();
 
     void pokemonNotFound();
+
+    void checkDecision(String name, Action action);
 }
