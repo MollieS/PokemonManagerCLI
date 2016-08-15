@@ -1,7 +1,6 @@
 package pokemoncli.navigation;
 
 public enum Action {
-
     CATCH,
     SHOWPOKEMON,
     SEARCH,

@@ -1,15 +1,19 @@
-package pokemoncli;
+package pokemoncli.pages;
 
 import org.junit.Before;
 import org.junit.Test;
-import pkmncore.Pokemon;
-import pkmncore.PokemonError;
-import pkmncore.storage.PokemonManager;
-import pkmncore.testfakes.StorageFake;
 import pokemoncli.consoleUI.Script;
 import pokemoncli.navigation.Action;
 import pokemoncli.navigation.Message;
-import pokemoncli.pages.FreePage;
+import pokemoncli.ui.DisplayFake;
+import pokemoncli.ui.InputFake;
+import pokemonmanager.Pokemon;
+import pokemonmanager.PokemonError;
+import pokemonmanager.pokemon.NamedPokemon;
+import pokemonmanager.storage.PokemonManager;
+import pokemonmanager.testfakes.StorageFake;
+
+import java.util.Arrays;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
@@ -20,6 +24,7 @@ public class FreePageTest {
     private StorageFake storageFake;
     private FreePage page;
     private DisplayFake displayFake;
+    private Pokemon pokemon = new NamedPokemon("pikachu", "4", Arrays.asList("lightning-rod", "static"));
 
     @Before
     public void setUp() {
@@ -28,78 +33,107 @@ public class FreePageTest {
         this.storageFake = new StorageFake();
         PokemonManager pokemonManager = new PokemonManager(storageFake);
         this.page = new FreePage(displayFake, inputFake, pokemonManager);
-
     }
 
     @Test
     public void getsNameOfPokemonToFree() throws PokemonError {
-        storageFake.save("pikachu", "4", new String[]{"lightning-rod", "static"});
+        savePokemon();
+        inputFake.set("pikachu", "yes");
+
+        page.view(Message.NONE);
+
+        assertTrue(getOutput().contains("wish to FREE"));
+        assertTrue(getOutput().contains("pikachu the pokemon you want to FREE?"));
+    }
+
+    @Test
+    public void redirectsToManagePageIfPokemonIsFreed() throws PokemonError {
+        savePokemon();
         inputFake.set("pikachu", "yes");
 
         Action action = page.view(Message.NONE);
-        String output = displayFake.read();
-        Message message = page.getMessage();
 
-        assertTrue(output.contains("Which pokemon do you want to set free"));
-        assertTrue(output.contains("Are you sure you want to set pikachu free?"));
-        assertEquals(Message.FREE, message);
         assertEquals(Action.MANAGE, action);
     }
 
     @Test
-    public void cannotFreeIfNoneCaught() {
+    public void returnsFreedMessageIfPokemonIsFreed() throws PokemonError {
+        savePokemon();
         inputFake.set("pikachu", "yes");
 
-        Action action = page.view(Message.NONE);
+        page.view(Message.NONE);
+        Message message = page.getMessage();
+
+        assertEquals(Message.FREE, message);
+    }
+
+    @Test
+    public void returnsErrorIfNoPokemonAreFreed() {
+        inputFake.set("pikachu", "yes");
+
+        page.view(Message.NONE);
         Message message = page.getMessage();
 
         assertEquals(Message.FREEERROR, message);
+    }
+
+    @Test
+    public void redirectsToManageIfPokemonAreNotFreed() {
+        inputFake.set("pikachu", "yes");
+
+        Action action = page.view(Message.NONE);
+
         assertEquals(Action.MANAGE, action);
     }
 
     @Test
     public void showsDetailsOfPokemon() throws PokemonError {
-        storageFake.save("pikachu", "4", new String[]{"lightning-rod", "static"});
+        savePokemon();
         inputFake.set("pikachu", "no");
 
         page.view(Message.NONE);
-        String output = displayFake.read();
 
-        assertTrue(output.contains("PIKACHU"));
+        assertTrue(getOutput().contains("PIKACHU"));
     }
 
     @Test
     public void canChooseNotToFreeAPokemon() throws PokemonError {
-        storageFake.save("pikachu", "4", new String[]{"lightning-rod", "static"});
+        savePokemon();
         inputFake.set("pikachu", "no");
 
-        Action action = page.view(Message.NONE);
+        page.view(Message.NONE);
         Message message = page.getMessage();
 
         assertEquals(Message.NONE, message);
-        assertEquals(Action.MANAGE, action);
     }
 
     @Test
-    public void loopsForValidInput() throws PokemonError {
-        storageFake.save("pikachu", "4", new String[]{"lightning-rod", "static"});
+    public void returnsErrorIfInvalidInput() throws PokemonError {
+        savePokemon();
         inputFake.set("pikachu", "invalid");
 
-        Action action = page.view(Message.NONE);
+        page.view(Message.NONE);
         Message message = page.getMessage();
 
         assertEquals(Message.INPUTERROR, message);
-        assertEquals(Action.MANAGE, action);
     }
 
     @Test
     public void returnsThePokemonFreed() throws PokemonError {
-        storageFake.save("pikachu", "4", new String[]{"lightning-rod", "static"});
-
+        savePokemon();
         inputFake.set("pikachu", "yes");
+
         page.view(Message.FREE);
         Pokemon pokemon = page.getPokemon();
 
         assertEquals("pikachu", pokemon.getName());
+    }
+
+    private void savePokemon() throws PokemonError {
+        storageFake.save(pokemon);
+    }
+
+    private String getOutput() {
+        return displayFake.read();
     }
 }

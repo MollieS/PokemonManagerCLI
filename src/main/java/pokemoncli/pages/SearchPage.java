@@ -1,10 +1,12 @@
 package pokemoncli.pages;
 
-import pkmncore.Pokemon;
-import pkmncore.search.PokemonFinder;
-import pokemoncli.*;
+import pokemoncli.Display;
+import pokemoncli.Input;
+import pokemoncli.Page;
 import pokemoncli.navigation.Action;
 import pokemoncli.navigation.Message;
+import pokemonmanager.Pokemon;
+import pokemonmanager.search.PokemonFinder;
 
 public class SearchPage implements Page {
 
@@ -28,8 +30,8 @@ public class SearchPage implements Page {
 
     private void showPageContent() {
         display.clearScreen();
-        display.showSearchHeader();
-        display.promptUser();
+        display.showHeader(Action.SEARCH);
+        display.promptUser(Action.SEARCH);
     }
 
     public Message getMessage() {

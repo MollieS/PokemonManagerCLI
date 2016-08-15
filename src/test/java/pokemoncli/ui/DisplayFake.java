@@ -1,7 +1,9 @@
-package pokemoncli;
+package pokemoncli.ui;
 
-import pkmncore.Pokemon;
+import pokemoncli.Display;
 import pokemoncli.consoleUI.Script;
+import pokemoncli.navigation.Action;
+import pokemonmanager.Pokemon;
 
 public class DisplayFake implements Display {
 
@@ -17,23 +19,15 @@ public class DisplayFake implements Display {
     }
 
     public void greet() {
-        outputStream += script.greet();
+        outputStream += script.menuHeader();
     }
 
     public void showMenu() {
         outputStream += script.showMenu();
     }
 
-    public void showSearchHeader() {
-        outputStream += script.searchPage();
-    }
-
-    public void showFreeHeader() {
-        outputStream += script.freePage();
-    }
-
-    public void promptUser() {
-        outputStream += script.promptUser();
+    public void promptUser(Action action) {
+        outputStream += script.promptUser(action);
     }
 
     public void showDetails(Pokemon pokemon) {
@@ -55,8 +49,8 @@ public class DisplayFake implements Display {
         outputStream += script.noCaughtPokemon();
     }
 
-    public void showViewHeader() {
-        outputStream += script.viewPage();
+    public void showHeader(Action action) {
+        outputStream += script.header(action);
     }
 
     public void showPokemonCount(int size) {
@@ -69,18 +63,6 @@ public class DisplayFake implements Display {
 
     public void invalidInput() {
         outputStream += script.invalidInput();
-    }
-
-    public void checkIfCaught(String name) {
-        outputStream += script.checkIfCaught(name);
-    }
-
-    public void promptForNameToFree() {
-        outputStream += script.askForFreeName();
-    }
-
-    public void confirmFreedom(String name) {
-        outputStream += script.confirmFreedom(name);
     }
 
     public void confirmPokemonIsFree(String name) {
@@ -97,5 +79,9 @@ public class DisplayFake implements Display {
 
     public void pokemonNotFound() {
         outputStream += script.pokemonNotFound();
+    }
+
+    public void checkDecision(String name, Action action) {
+        outputStream += script.checkUserAction(name, action);
     }
 }

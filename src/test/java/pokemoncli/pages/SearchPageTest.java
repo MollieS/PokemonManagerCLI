@@ -1,13 +1,14 @@
-package pokemoncli;
+package pokemoncli.pages;
 
 import org.junit.Before;
 import org.junit.Test;
-import pkmncore.Pokemon;
-import pkmncore.search.PokemonFinder;
-import pkmncore.testfakes.SearchFake;
+import pokemoncli.ui.DisplayFake;
+import pokemoncli.ui.InputFake;
 import pokemoncli.consoleUI.Script;
 import pokemoncli.navigation.Message;
-import pokemoncli.pages.SearchPage;
+import pokemonmanager.Pokemon;
+import pokemonmanager.search.PokemonFinder;
+import pokemonmanager.testfakes.SearchFake;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
@@ -27,15 +28,23 @@ public class SearchPageTest {
     }
 
     @Test
-    public void showsPageContent() {
+    public void promptsForANameToSearchFor() {
+        input.set("pikachu");
+
+        searchPage.view(Message.NONE);
+        String output = display.read();
+
+        assertTrue(output.contains("SEARCH"));
+        assertTrue(output.contains("wish to SEARCH"));
+    }
+
+    @Test
+    public void returnsANullMessageForValidInput() {
         input.set("pikachu");
 
         searchPage.view(Message.NONE);
         Message message = searchPage.getMessage();
-        String output = display.read();
 
-        assertTrue(output.contains("SEARCH"));
-        assertTrue(output.contains("wish to find"));
         assertEquals(Message.NONE, message);
     }
 
@@ -44,10 +53,8 @@ public class SearchPageTest {
         input.set("pikachu");
 
         searchPage.view(Message.NONE);
-        Message message = searchPage.getMessage();
         Pokemon pokemon = searchPage.getPokemon();
 
-        assertEquals(Message.NONE, message);
         assertEquals("pikachu", pokemon.getName());
     }
 

@@ -1,9 +1,12 @@
-package pokemoncli;
+package pokemoncli.ui;
 
 import org.junit.Test;
-import pkmncore.Pokemon;
-import pkmncore.pokemon.NamedPokemon;
 import pokemoncli.consoleUI.Script;
+import pokemoncli.navigation.Action;
+import pokemonmanager.Pokemon;
+import pokemonmanager.pokemon.NamedPokemon;
+
+import java.util.Arrays;
 
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
@@ -14,37 +17,22 @@ public class ScriptTest {
 
     @Test
     public void greetsUser() {
-        assertTrue(script.greet().contains("WELCOME"));
+        assertTrue(script.menuHeader().contains("WELCOME TO POKEMON MANAGER"));
     }
 
     @Test
     public void displaysSearchPage() {
-        assertTrue(script.searchPage().contains("SEARCH"));
-    }
-
-    @Test
-    public void displaysAddPage() {
-        assertTrue(script.addingPage().contains("ADD"));
-    }
-
-    @Test
-    public void displaysCaughtPokemon() {
-        assertTrue(script.viewPage().contains("YOUR POKEMON"));
-    }
-
-    @Test
-    public void displaysFreePokemonPage() {
-        assertTrue(script.freePage().contains("FREE A POKEMON"));
+        assertTrue(script.header(Action.SEARCH).contains("SEARCH"));
     }
 
     @Test
     public void instructsAUserToEnterAName() {
-        assertTrue(script.promptUser().contains("enter the name of the pokemon you wish to find"));
+        assertTrue(script.promptUser(Action.SEARCH).contains("enter the name of the pokemon you wish to SEARCH"));
     }
 
     @Test
     public void displaysPokemonInformation() {
-        Pokemon pokemon = new NamedPokemon("charmander", "6", new String[]{"solar-power", "blaze"});
+        Pokemon pokemon = new NamedPokemon("charmander", "6", Arrays.asList("solar-power", "blaze"));
         String output = script.showDetails(pokemon);
         assertTrue(output.contains("CHARMANDER"));
         assertTrue(output.contains("6"));
@@ -69,7 +57,7 @@ public class ScriptTest {
 
     @Test
     public void asksWhichPokemonToAdd() {
-        assertTrue(script.promptUserForCaughtPokemon().contains("Which pokemon did you catch?"));
+        assertTrue(script.promptUser(Action.CATCH).contains("wish to CATCH"));
     }
 
     @Test
@@ -79,7 +67,7 @@ public class ScriptTest {
 
     @Test
     public void showsHowManyPokemonAreCaught() {
-      assertTrue(script.showCount(1).contains("you have caught 1 pokemon"));
+        assertTrue(script.showCount(1).contains("you have caught 1 pokemon"));
     }
 
     @Test
@@ -109,12 +97,12 @@ public class ScriptTest {
 
     @Test
     public void promptsUserForNameOfPokemonToSetFree() {
-        assertTrue(script.askForFreeName().contains("Which pokemon do you want to set free?"));
+        assertTrue(script.promptUser(Action.FREE).contains("wish to FREE"));
     }
 
     @Test
     public void asksForConfirmationForSettingAPokemonFree() {
-        assertTrue(script.confirmFreedom("pikachu").contains("Are you sure you want to set pikachu free?"));
+        assertTrue(script.checkUserAction("pikachu", Action.FREE).contains("pikachu the pokemon you want to FREE?"));
     }
 
     @Test

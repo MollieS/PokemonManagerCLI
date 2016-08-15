@@ -1,9 +1,11 @@
 package pokemoncli.pages;
 
-import pkmncore.Pokemon;
-import pokemoncli.*;
+import pokemoncli.Display;
+import pokemoncli.Input;
+import pokemoncli.Page;
 import pokemoncli.navigation.Action;
 import pokemoncli.navigation.Message;
+import pokemonmanager.Pokemon;
 
 public class PokemonDetailPage implements Page {
 
@@ -27,26 +29,29 @@ public class PokemonDetailPage implements Page {
     private Action getAction() {
         if (pokemon == Pokemon.NULL) {
             return pokemonNotFound();
-        } else {
-            return pokemonFound();
         }
+        return pokemonFound();
     }
 
     private Action pokemonFound() {
         message = Message.NONE;
-        display.checkIfCaught(pokemon.getName());
+        display.checkDecision(pokemon.getName(), Action.CATCH);
         String answer = input.get().trim().toLowerCase();
         return getAction(answer);
     }
 
     private Action getAction(String answer) {
         Action action;
-        if (answer.equals("yes")) {
-            action = Action.CATCH;
-        } else if (answer.equals("no")){
-            action = noSave();
-        } else {
-            action = invalidInput();
+        switch (answer) {
+            case "yes":
+                action = Action.CATCH;
+                break;
+            case "no":
+                action = noSave();
+                break;
+            default:
+                action = invalidInput();
+                break;
         }
         return action;
     }

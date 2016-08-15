@@ -1,6 +1,7 @@
 package pokemoncli;
 
-import pkmncore.Pokemon;
+import pokemoncli.navigation.Action;
+import pokemonmanager.Pokemon;
 
 public interface Display {
 
@@ -8,23 +9,17 @@ public interface Display {
 
     void showMenu();
 
-    void showSearchHeader();
-
-    void showFreeHeader();
-
-    void promptUser();
+    void promptUser(Action action);
 
     void showDetails(Pokemon pokemon);
 
     void clearScreen();
 
-    void confirmSave(String name);
-
     void saveError(String name);
 
     void noPokemon();
 
-    void showViewHeader();
+    void showHeader(Action action);
 
     void showPokemonCount(int size);
 
@@ -32,17 +27,15 @@ public interface Display {
 
     void invalidInput();
 
-    void checkIfCaught(String name);
-
-    void promptForNameToFree();
-
-    void confirmFreedom(String name);
+    void confirmSave(String name);
 
     void confirmPokemonIsFree(String name);
 
-    void managementMenu();
-
     void freeError(String pokemonName);
 
+    void managementMenu();
+
     void pokemonNotFound();
+
+    void checkDecision(String name, Action action);
 }

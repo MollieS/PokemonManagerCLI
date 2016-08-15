@@ -1,11 +1,15 @@
 package pokemoncli.pages;
 
-import pkmncore.Pokemon;
-import pkmncore.storage.PokemonManager;
-import pokemoncli.*;
+import pokemoncli.Display;
+import pokemoncli.Input;
+import pokemoncli.Page;
 import pokemoncli.navigation.Action;
 import pokemoncli.navigation.Message;
+import pokemonmanager.Pokemon;
+import pokemonmanager.PokemonError;
+import pokemonmanager.storage.PokemonManager;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class ManagementPage implements Page {
@@ -15,12 +19,14 @@ public class ManagementPage implements Page {
     private final PokemonManager manager;
     private Pokemon pokemon;
     private Message message;
+    private Action action;
 
-    public ManagementPage(Display display, Input input, PokemonManager manager, Pokemon pokemon) {
+    public ManagementPage(Display display, Input input, PokemonManager manager, Pokemon pokemon, Action action) {
         this.display = display;
         this.input = input;
         this.manager = manager;
         this.pokemon = pokemon;
+        this.action = action;
     }
 
     public Action view(Message toDisplay) {
@@ -28,9 +34,20 @@ public class ManagementPage implements Page {
         showMessage(toDisplay);
         pokemon = Pokemon.NULL;
         display.managementMenu();
+        return getAction(getUserAction());
+    }
+
+    public Message getMessage() {
+        return message;
+    }
+
+    public Pokemon getPokemon() {
+        return pokemon;
+    }
+
+    private Action getUserAction() {
         String answer = input.get().toUpperCase().trim();
-        Action action = getUserAction(answer);
-        return getAction(action);
+        return getUserAction(answer);
     }
 
     private Action getAction(Action action) {
@@ -41,10 +58,20 @@ public class ManagementPage implements Page {
 
     private void showPageContent() {
         display.clearScreen();
-        display.showViewHeader();
-        List<Pokemon> caughtPokemon = manager.viewCaughtPokemon();
+        display.showHeader(action);
+        List<Pokemon> caughtPokemon = getAllPokemon();
         showPokemon(caughtPokemon);
         display.showPokemonCount(caughtPokemon.size());
+    }
+
+    private List<Pokemon> getAllPokemon() {
+        List<Pokemon> caughtPokemon = new ArrayList<>();
+        try {
+            caughtPokemon = manager.viewCaughtPokemon();
+        } catch (PokemonError pokemonError) {
+            pokemonError.printStackTrace();
+        }
+        return caughtPokemon;
     }
 
     private Action getUserAction(String answer) {
@@ -57,16 +84,22 @@ public class ManagementPage implements Page {
     }
 
     private void showMessage(Message toDisplay) {
-        if (toDisplay == Message.CATCH) {
-            display.confirmSave(pokemon.getName());
-        } else if (toDisplay == Message.FREE) {
-            display.confirmPokemonIsFree(pokemon.getName());
-        } else if (toDisplay == Message.SAVEERROR) {
-            display.saveError(pokemon.getName());
-        } else if (toDisplay == Message.FREEERROR) {
-            display.freeError(pokemon.getName());
-        } else if (toDisplay == Message.INPUTERROR) {
-            display.invalidInput();
+        switch (toDisplay) {
+            case CATCH:
+                display.confirmSave(pokemon.getName());
+                break;
+            case FREE:
+                display.confirmPokemonIsFree(pokemon.getName());
+                break;
+            case SAVEERROR:
+                display.saveError(pokemon.getName());
+                break;
+            case FREEERROR:
+                display.freeError(pokemon.getName());
+                break;
+            case INPUTERROR:
+                display.invalidInput();
+                break;
         }
     }
 
@@ -74,17 +107,7 @@ public class ManagementPage implements Page {
         if (caughtPokemon.isEmpty()) {
             display.noPokemon();
         } else {
-            for (Pokemon pokemon : caughtPokemon) {
-                display.showDetails(pokemon);
-            }
+            caughtPokemon.forEach(display::showDetails);
         }
-    }
-
-    public Message getMessage() {
-        return message;
-    }
-
-    public Pokemon getPokemon() {
-        return pokemon;
     }
 }

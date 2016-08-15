@@ -1,13 +1,16 @@
-package pokemoncli;
+package pokemoncli.pages;
 
 import org.junit.Before;
 import org.junit.Test;
-import pkmncore.Pokemon;
-import pkmncore.pokemon.NamedPokemon;
+import pokemoncli.ui.DisplayFake;
+import pokemoncli.ui.InputFake;
 import pokemoncli.consoleUI.Script;
 import pokemoncli.navigation.Action;
 import pokemoncli.navigation.Message;
-import pokemoncli.pages.PokemonDetailPage;
+import pokemonmanager.Pokemon;
+import pokemonmanager.pokemon.NamedPokemon;
+
+import java.util.Arrays;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
@@ -21,7 +24,7 @@ public class PokemonDetailPageTest {
     @Before
     public void setUp() {
         this.display = new DisplayFake(new Script());
-        Pokemon pokemon = new NamedPokemon("pikachu", "4", new String[]{"lightning-rod", "static"});
+        Pokemon pokemon = new NamedPokemon("pikachu", "4", Arrays.asList("lightning-rod", "static"));
         this.input = new InputFake();
         this.pokemonDetailPage = new PokemonDetailPage(display, input, pokemon);
     }
@@ -30,18 +33,35 @@ public class PokemonDetailPageTest {
     public void showsPokemonDetails() {
         input.set("no");
 
-        Action action = pokemonDetailPage.view(Message.NONE);
+        pokemonDetailPage.view(Message.NONE);
         String output = display.read();
-        Message message = pokemonDetailPage.getMessage();
 
         assertTrue(output.contains("PIKACHU"));
+    }
+
+    @Test
+    public void redirectsToMenuIfNoSave() {
+        input.set("no");
+
+        Action action = pokemonDetailPage.view(Message.NONE);
+
         assertEquals(Action.MENU, action);
+    }
+
+    @Test
+    public void doesNotReturnAMessageIfNoSave() {
+        input.set("no");
+
+        pokemonDetailPage.view(Message.NONE);
+        Message message = pokemonDetailPage.getMessage();
+
         assertEquals(Message.NONE, message);
     }
 
     @Test
-    public void redirectsToCatchPageIfAnswerIsYes() {
+    public void redirectsToCatchPageIfPokemonIsSaved() {
         input.set("yes");
+
         Action action = pokemonDetailPage.view(Message.NONE);
 
         assertEquals(Action.CATCH, action);
@@ -68,7 +88,7 @@ public class PokemonDetailPageTest {
     }
 
     @Test
-    public void loopsForValidInput() {
+    public void returnsAnInputErrorMessageIfInputIsInvalid() {
         input.set("not valid input");
 
         pokemonDetailPage.view(Message.NONE);
@@ -80,10 +100,19 @@ public class PokemonDetailPageTest {
     @Test
     public void redirectsToMenuIfPokemonIsNotFound() {
         PokemonDetailPage pokemonDetailPage = new PokemonDetailPage(display, input, Pokemon.NULL);
+
         Action action = pokemonDetailPage.view(Message.NONE);
-        Message message = pokemonDetailPage.getMessage();
 
         assertEquals(Action.MENU, action);
+    }
+
+    @Test
+    public void returnsNotFoundMessageIfPokemonIsNotFound() {
+        PokemonDetailPage pokemonDetailPage = new PokemonDetailPage(display, input, Pokemon.NULL);
+
+        pokemonDetailPage.view(Message.NONE);
+        Message message = pokemonDetailPage.getMessage();
+
         assertEquals(Message.NOTFOUND, message);
     }
 }

@@ -1,9 +1,11 @@
 package pokemoncli.pages;
 
-import pkmncore.Pokemon;
-import pokemoncli.*;
+import pokemoncli.Display;
+import pokemoncli.Input;
+import pokemoncli.Page;
 import pokemoncli.navigation.Action;
 import pokemoncli.navigation.Message;
+import pokemonmanager.Pokemon;
 
 public class MenuPage implements Page {
 
@@ -24,6 +26,14 @@ public class MenuPage implements Page {
         return Action.NONE;
     }
 
+    public Message getMessage() {
+        return message;
+    }
+
+    public Pokemon getPokemon() {
+        return Pokemon.NULL;
+    }
+
     private void showPageContent(Message messageToDisplay) {
         display.clearScreen();
         display.greet();
@@ -33,7 +43,9 @@ public class MenuPage implements Page {
 
     private boolean actionIsValid(String answer) {
         for (Action action : Action.values()) {
-            if (getAction(answer, action)) return true;
+            if (getAction(answer, action)) {
+                return true;
+            }
         }
         message = Message.INPUTERROR;
         return false;
@@ -53,12 +65,5 @@ public class MenuPage implements Page {
         } else if (messageToDisplay == Message.NOTFOUND) {
             display.pokemonNotFound();
         }
-    }
-    public Message getMessage() {
-        return message;
-    }
-
-    public Pokemon getPokemon() {
-        return Pokemon.NULL;
     }
 }

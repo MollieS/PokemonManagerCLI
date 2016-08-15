@@ -1,6 +1,9 @@
-package pokemoncli;
+package pokemoncli.ui;
+
+import pokemoncli.Input;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class InputFake implements Input {
@@ -8,9 +11,7 @@ public class InputFake implements Input {
     private List<String> input = new ArrayList();
 
     public void set(String... words) {
-        for (String word : words) {
-            input.add(word);
-        }
+        Collections.addAll(input, words);
     }
 
     public String get() {

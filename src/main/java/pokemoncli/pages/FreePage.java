@@ -1,12 +1,15 @@
 package pokemoncli.pages;
 
-import pkmncore.Pokemon;
-import pkmncore.PokemonError;
-import pkmncore.storage.PokemonManager;
-import pokemoncli.*;
+import pokemoncli.Display;
+import pokemoncli.Input;
+import pokemoncli.Page;
 import pokemoncli.navigation.Action;
 import pokemoncli.navigation.Message;
+import pokemonmanager.Pokemon;
+import pokemonmanager.PokemonError;
+import pokemonmanager.storage.PokemonManager;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class FreePage implements Page {
@@ -24,27 +27,49 @@ public class FreePage implements Page {
     }
 
     public Action view(Message toBeDisplayed) {
-        display.promptForNameToFree();
+        display.promptUser(Action.FREE);
         String name = input.get().trim().toLowerCase();
-        List<Pokemon> caughtPokemon = pokemonManager.viewCaughtPokemon();
+        List<Pokemon> caughtPokemon = getCaughtPokemon();
         pokemon = findPokemon(name, caughtPokemon);
-        if (pokemon != Pokemon.NULL) {
-            confirmFree();
-            String answer = input.get().trim().toLowerCase();
-            processInput(name, answer);
-        } else {
-            message = Message.FREEERROR;
-        }
+        tryToFreePokemon(name);
         return Action.MANAGE;
     }
 
-    private void processInput(String name, String answer) {
-        if (answer.equals("yes")) {
-            setPokemonFree(name);
-        } else if (answer.equals("no")) {
-            message = Message.NONE;
+    private void tryToFreePokemon(String name) {
+        if (pokemon != Pokemon.NULL) {
+            freePokemon(name);
         } else {
-            message = Message.INPUTERROR;
+            message = Message.FREEERROR;
+        }
+    }
+
+    private void freePokemon(String name) {
+        confirmFree();
+        String answer = input.get().trim().toLowerCase();
+        processInput(name, answer);
+    }
+
+    private List<Pokemon> getCaughtPokemon() {
+        List<Pokemon> caughtPokemon = new ArrayList<>();
+        try {
+            caughtPokemon = pokemonManager.viewCaughtPokemon();
+        } catch (PokemonError pokemonError) {
+            pokemonError.printStackTrace();
+        }
+        return caughtPokemon;
+    }
+
+    private void processInput(String name, String answer) {
+        switch (answer) {
+            case "yes":
+                setPokemonFree(name);
+                break;
+            case "no":
+                message = Message.NONE;
+                break;
+            default:
+                message = Message.INPUTERROR;
+                break;
         }
     }
 
@@ -60,9 +85,8 @@ public class FreePage implements Page {
     private void confirmFree() {
         display.clearScreen();
         display.showDetails(pokemon);
-        display.confirmFreedom(pokemon.getName());
+        display.checkDecision(pokemon.getName(), Action.FREE);
     }
-
 
     private Pokemon findPokemon(String name, List<Pokemon> caughtPokemon) {
         for (Pokemon pokemon : caughtPokemon) {
